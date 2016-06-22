@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".activities.AceptacionServicio">
+
+    <!--<android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarAceptacionServicio"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>-->
+
+    <!--   <android.support.v4.widget.NestedScrollView
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           app:layout_behavior="@string/appbar_scrolling_view_behavior"
+           android:fillViewport="true"
+           android:background="@color/colorBlanco"
+
+           >-->
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/fondo_beya"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:weightSum="1"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".MainActivity"
+        >
+
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <com.techambits.beya.CircularImageView.CircularNetworkImageView
+                android:id="@+id/imagenUsuarioDetalleHistorial"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="top"
+                android:adjustViewBounds="true"
+                android:padding="2dip"
+                android:paddingRight="6dp"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/nombreSolicitudDetalleHistorial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="6dp"
+                    android:textColor="@color/colorAccent"
+
+                    android:text="SOLICITUD N°154"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/nombrsdsdeCliedfsdfntmmmeAceptacionServicio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="6dp"
+                        android:text="Fecha: "
+                        android:textStyle="bold"
+
+
+                        android:textColor="@color/colorAccent"
+                        />
+
+                    <TextView
+                        android:id="@+id/fechaSolicitudDetalleHistorial"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorAccent"
+
+
+                       />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/kilometrosEsteticistaAceptacionServicios"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+
+                    android:paddingLeft="6dp"
+                    android:text="Estoy a:"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/nombrsxzxdsdeCliedfsdfntmmmeAceptacionServicio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="6dp"
+                        android:textColor="@color/colorAccent"
+                        android:textStyle="bold"
+
+
+                        android:text="Cliente: " />
+
+                    <TextView
+                        android:id="@+id/nombreClienteDetalleHistorial"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorAccent"
+                         />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/nombrsxcionServicio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="6dp"
+                        android:text="Dirección: "
+                        android:textStyle="bold"
+
+                        android:textColor="@color/colorAccent"
+                        />
+
+                    <TextView
+                        android:id="@+id/direccionDetalleHistorial"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorAccent"
+                         />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/nomionServicio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="6dp"
+                        android:text="Estado: "
+                        android:textStyle="bold"
+
+                        android:textColor="@color/colorAccent"
+                        />
+
+                    <TextView
+                        android:id="@+id/estadoDetalleHistorial"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorAccent"
+                         />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/nomixxxonServicio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="6dp"
+                        android:text="Aceptación: "
+                        android:textStyle="bold"
+
+                        android:textColor="@color/colorAccent"
+                        />
+
+                    <TextView
+                        android:id="@+id/fechaAceptacionDetalleHistorial"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorAccent"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/nomixxxvicio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="6dp"
+                        android:text="Finalización: "
+                        android:textStyle="bold"
+
+                        android:textColor="@color/colorAccent"
+                        />
+
+                    <TextView
+                        android:id="@+id/fechaFinalizacionDetalleHistorial"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorAccent"
+
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/nomixxxvxxicio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="6dp"
+                        android:text="Esteticista: "
+                        android:textStyle="bold"
+
+                        android:textColor="@color/colorAccent"
+                        />
+
+                    <TextView
+                        android:id="@+id/nombreEsteticistaDetalleHistorial"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorAccent"
+                       />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/nomixxxvio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="6dp"
+                        android:text="Calificación: " />
+
+                    <TextView
+                        android:id="@+id/calificacionDetalleHistorial"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                         />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/nombrsdsdeCliedfsdfnteAceptacionServicio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="6dp"
+                        android:text="Valor: "
+                        android:textStyle="bold"
+
+                        android:textColor="@color/colorAccent"
+                        />
+
+                    <TextView
+                        android:id="@+id/valorSolicitudDetalleHistorial"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorAccent"
+                         />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <TextView
+            android:id="@+id/detalleServiciosHistorialServicios"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DETALLE DE SERVICIOS"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorAccent"
+            />
+
+
+
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_servicios_detalle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scrollbars="vertical"
+            android:visibility="visible" />
+
+
+    </LinearLayout>
+
+
+    <!--
+    </android.support.v4.widget.NestedScrollView>
+    -->
+
+</android.support.design.widget.CoordinatorLayout>

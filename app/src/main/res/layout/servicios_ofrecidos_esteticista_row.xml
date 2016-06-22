@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:clickable="true"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textViewIDServicio"
+        android:textColor="@color/title"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/textViewNombreServicio"
+        android:textSize="16dp"
+        android:paddingTop="20dp"
+
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MANICURE"
+        android:layout_alignStart="@+id/textViewValorServicio" />
+
+    <TextView
+        android:id="@+id/textViewDescServicio"
+        android:layout_below="@id/textViewNombreServicio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Arreglo de uñas de las manos.SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS"
+        android:layout_weight="1"
+        android:ellipsize="none"
+        android:visibility="gone"
+        android:maxLines="100"
+        android:scrollHorizontally="false"
+        android:layout_toStartOf="@+id/checkBoxServicio"
+        android:layout_toEndOf="@+id/imageItemService"/>
+
+    <TextView
+        android:id="@+id/textViewValorServicio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="17,000"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/imageItemService" />
+
+
+
+    <!-- <ImageView
+         android:layout_width="80dp"
+         android:layout_height="80dp"
+         android:scaleType="fitXY"
+         android:adjustViewBounds="true"
+         android:layout_gravity="center"
+         android:paddingRight="5dp"
+         android:id="@+id/imageView3"
+         android:src="@drawable/ic_blower"
+         android:layout_alignParentTop="true"
+         android:layout_alignBottom="@+id/textViewValorServicio"
+         android:layout_alignStart="@+id/textViewIDServicio" />-->
+
+    <!--
+        android:scaleType="fitXY"
+        le quite esto al NetworkImageView abajo!
+    -->
+
+    <com.techambits.beya.CircularImageView.CircularNetworkImageView
+        android:id="@+id/imageItemService"
+        android:layout_width="100dp"
+        android:paddingRight="6dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_blower"
+        android:adjustViewBounds="true"
+        android:layout_gravity="center"
+        android:layout_alignParentTop="true"/>
+
+
+</RelativeLayout>

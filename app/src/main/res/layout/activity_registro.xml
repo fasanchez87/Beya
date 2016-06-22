@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".activities.Registro"
+    android:background="@color/colorBlanco">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true"
+        android:background="@drawable/fondo_beya">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
+            android:gravity="top"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:descendantFocusability="beforeDescendants"
+            android:focusableInTouchMode="true">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_nombre_registro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorAccent"
+                android:layout_weight="1">
+
+
+                <EditText
+                    android:id="@+id/edit_text_nombre_registro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nombre"
+                    android:inputType="textCapSentences"                    android:backgroundTint="@color/colorAccent"
+                    android:textColorHint="@color/colorAccent"
+                    android:textColor="@color/colorAccent"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_apellido_registro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorAccent"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/edit_text_apellido_registro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Apellido"
+                    android:inputType="textCapSentences"                    android:backgroundTint="@color/colorAccent"
+                    android:textColorHint="@color/colorAccent"
+                    android:textColor="@color/colorAccent"/>
+            </android.support.design.widget.TextInputLayout>
+
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_email_registro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorAccent">
+
+                <EditText
+                    android:id="@+id/edit_text_email_registro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:backgroundTint="@color/colorAccent"
+                    android:textColorHint="@color/colorAccent"
+                    android:textColor="@color/colorAccent"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_documento_registro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorAccent">
+
+                <EditText
+                    android:id="@+id/edit_text_documento_registro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Número documento"
+                    android:inputType="number"
+                    android:backgroundTint="@color/colorAccent"
+                    android:textColorHint="@color/colorAccent"
+                    android:textColor="@color/colorAccent"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_telefono_registro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorAccent">
+
+                <EditText
+                    android:id="@+id/edit_text_telefono_registro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Teléfono"
+                    android:inputType="number"
+                    android:backgroundTint="@color/colorAccent"
+                    android:textColorHint="@color/colorAccent"
+                    android:textColor="@color/colorAccent"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_direccion_registro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorAccent">
+
+                <EditText
+                    android:id="@+id/edit_text_direccion_registro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Dirección"
+                    android:inputType="textCapCharacters"                    android:backgroundTint="@color/colorAccent"
+                    android:textColorHint="@color/colorAccent"
+                    android:textColor="@color/colorAccent"
+
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_ciudad_registro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorAccent">
+
+                <EditText
+                    android:id="@+id/edit_text_ciudad_registro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Ciudad"
+                    android:inputType="textCapCharacters"                    android:backgroundTint="@color/colorAccent"
+                    android:textColorHint="@color/colorAccent"
+                    android:textColor="@color/colorAccent"
+                    />
+            </android.support.design.widget.TextInputLayout>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_departamento_registro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorAccent">
+
+                <EditText
+                    android:id="@+id/edit_text_departamento_registro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Departamento"
+                    android:inputType="textCapCharacters"                    android:backgroundTint="@color/colorAccent"
+                    android:textColorHint="@color/colorAccent"
+                    android:textColor="@color/colorAccent"
+                    />
+            </android.support.design.widget.TextInputLayout>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_clave_registro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorAccent">
+
+
+                <EditText
+                    android:id="@+id/edit_text_clave_registro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Clave"
+                    android:inputType="textPassword"
+                    android:backgroundTint="@color/colorAccent"
+                    android:textColorHint="@color/colorAccent"
+                    android:textColor="@color/colorAccent"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+
+
+
+            <Button
+                android:id="@+id/btn_siguiente"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/css_buttons"
+                android:text="siguiente"
+                android:textColor="@android:color/white"
+                android:layout_alignParentBottom="true"
+                />
+
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom"
+                android:gravity="bottom">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:layout_marginBottom="30dp"
+                    >
+
+                    <ProgressBar
+                        android:id="@+id/progressBarRegistro"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:indeterminateTint="@color/colorAccent"
+                        android:indeterminateTintMode="src_atop"
+                        android:visibility="gone"
+                        />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+
+
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
+

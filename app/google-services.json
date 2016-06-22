@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "235096225731",
+    "project_id": "beya-1343"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:235096225731:android:1a33f59e6571dd10",
+        "android_client_info": {
+          "package_name": "com.techambits.beya"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAz4JfEZkkGvF1BxvURHoqjVLrl1OaZI8M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

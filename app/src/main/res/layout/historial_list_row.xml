@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:paddingBottom="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp">
+
+    <com.techambits.beya.CircularImageView.CircularNetworkImageView
+        android:id="@+id/imageItemServiceHistorial"
+        android:layout_width="80dp"
+        android:paddingRight="8dp"
+        android:layout_height="80dp"
+        android:adjustViewBounds="true"
+        android:layout_gravity="center"
+        android:layout_below="@+id/textViewIDServicio"
+        android:layout_alignParentStart="true" />
+
+
+
+    <TextView
+        android:id="@+id/textViewCodigoSolicitudHistorialServicio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:textColor="@color/title"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/textViewNombreSolicitudHistorialServicio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SOLICITUD N° 123"
+        android:paddingLeft="10dp"
+
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/imageItemServiceHistorial" />
+
+    <TextView
+        android:id="@+id/fechaSolicitudHistorialServicio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingLeft="10dp"
+
+        android:ellipsize="none"
+        android:maxLines="100"
+        android:textColor="@color/colorAccent"
+
+        android:scrollHorizontally="false"
+        android:text="Enero 26 2016 14:55"
+        android:layout_below="@+id/textViewNombreSolicitudHistorialServicio"
+        android:layout_toEndOf="@+id/imageItemServiceHistorial" />
+
+    <TextView
+        android:id="@+id/textViewEstadoSolicitudHistorialServicio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:paddingLeft="10dp"
+
+        android:layout_below="@+id/fechaSolicitudHistorialServicio"
+        android:layout_toEndOf="@+id/imageItemServiceHistorial"
+        android:text="Atendida por esteticista" />
+
+    <TextView
+        android:id="@+id/textViewValorServicioHistorialServicio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewEstadoSolicitudHistorialServicio"
+        android:layout_toEndOf="@+id/imageItemServiceHistorial"
+        android:text="17.000"
+        android:paddingLeft="10dp"
+
+        android:textColor="@color/colorAccent"
+        />
+
+    <ImageView
+        android:id="@+id/imageListHistorial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textViewValorServicioHistorialServicio"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_chevron_right_black_24dp"
+        android:text="" />
+
+</RelativeLayout>

@@ -1,0 +1,49 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+
+   <!-- <item android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        android:orderInCategory="100"
+        app:showAsAction="never" />-->
+
+    <item android:id="@+id/action_aceptar_bono_solicitud"
+        android:title="Aplicar Bono"
+        android:icon="@drawable/ic_markunread_white_24dp"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom"
+        android:visible="false"/>
+
+    <item android:id="@+id/action_acentar_servicios_seleccionados"
+        android:title="Acentar seleccion"
+        android:icon="@drawable/ic_note_add_white_24dp"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom"
+        android:visible="false"/>
+
+    <item android:id="@+id/action_llego_esteticista"
+        android:title="¿LLego el esteticista?"
+        android:icon="@drawable/ic_drive_eta_white_24dp"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/action_cancelar_servicio"
+        android:title="Cancelar Servicio"
+        android:icon="@drawable/ic_highlight_off_white_24dp"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom"
+        android:visible="true"/>
+
+
+
+
+
+
+
+    <!--<item android:id="@+id/action_nuevo"
+        android:title="@string/action_nuevo"
+        android:icon="@drawable/ic_nuevo"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom|withText" />
+-->
+</menu>

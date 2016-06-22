@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.techambits.beya">
+
+    <permission
+        android:name="com.techambits.beya.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.techambits.beya.permission.MAPS_RECEIVE" />
+
+    <!--
+     needed for older devices -
+     used to check app background / foreground status
+    -->
+    <uses-permission android:name="android.permission.REAL_GET_TASKS" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.BATTERY_STATS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <!-- START Added for GCM -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <permission
+        android:name="com.techambits.beya.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.techambits.beya.permission.C2D_MESSAGE" />
+    <!-- END Added for GCM -->
+
+    <uses-permission android:name="com.techambits.beya.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <application
+        android:name=".volley.ControllerSingleton"
+        android:allowBackup="true"
+        android:icon="@mipmap/beya_logo"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:persistent="true"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAz4JfEZkkGvF1BxvURHoqjVLrl1OaZI8M" />
+
+        <activity
+            android:name=".activities.SplashActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.Login"
+            android:label="@string/title_activity_registro"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.Registro"
+            android:label="@string/title_activity_registro"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.ValidarEmail"
+            android:label="@string/title_activity_validar_email"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.Pago"
+            android:label="@string/title_activity_pago"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.ValidarCodigoSeguridad"
+            android:label="@string/title_activity_validar_codigo_seguridad"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.CambiarClave"
+            android:label="@string/title_activity_cambiar_clave"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.Gestion"
+            android:label="@string/title_activity_gestion"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.SolitudServicioDetallada"
+            android:label="@string/title_activity_solitud_servicio_detallada"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <service
+            android:name=".services.ServiceActualizarUbicacionProveedor"
+            android:enabled="true"
+            android:exported="false" />
+        <service
+            android:name=".services.ServiceObtenerUbicacionEsteticista"
+            android:enabled="true"
+            android:exported="false" />
+
+        <!-- START Added for GCM -->
+
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="com.techambits.beya" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".gcm.MyGcmPushReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".gcm.GcmIntentService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
+            </intent-filter>
+        </service>
+
+        <!-- END Added for GCM -->
+
+        <activity
+            android:name=".activities.AceptacionServicio"
+            android:label="Orden Servicio"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.ListaServiciosEsteticista"
+            android:label="Servicios Agregados" />
+        <activity
+            android:name=".activities.ListaServiciosCliente"
+            android:label="Servicios Disponibles" />
+        <activity android:name=".activities.ListaServiciosRevisarEsteticista" />
+        <activity
+            android:name=".activities.DetalleServicioHistorial"
+            android:label="Detalle Solicitud" />
+        <activity android:name=".activities.GifEsperaEsteticista" />
+
+        <service
+            android:name=".services.HeartBeatServiceGCM"
+            android:enabled="true"
+            android:exported="false" />
+
+        <activity android:name=".activities.TerminosYCondiciones"></activity>
+    </application>
+
+</manifest>

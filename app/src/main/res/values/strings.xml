@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Beya</string>
+    <string name="action_settings">Configuracion</string>
+    <string name="hint_email">Correo Eléctronico</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="btn_sign_up">Registro</string>
+    <string name="err_msg_name">Por favor, digite su nombre</string>
+    <string name="err_msg_apellido">Por favor, digite su apellido</string>
+    <string name="err_msg_email">Por favor, digite un email valido</string>
+    <string name="err_msg_password">Por favor, digite su clave</string>
+    <string name="err_msg_password_length">Su clave debe tener al menos 5 caracteres</string>
+
+    <string name="title_activity_registro">Regístrate</string>
+    <string name="title_activity_validar_email">Validar Email</string>
+    <string name="title_activity_pago">Pago</string>
+    <string name="title_activity_validar_codigo_seguridad">Validar Codigo</string>
+    <string name="title_activity_cambiar_clave">Cambio de Clave</string>
+    <string name="title_activity_gestion">Solicitar Servicio</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_solitud_servicio_detallada">Servicio</string>
+    <string name="title_activity_aceptacion_servicio_esteticista">AceptacionServicioEsteticista
+    </string>
+    <string name="title_activity_lista_servicios_cliente">ListaServiciosCliente</string>
+
+
+</resources>

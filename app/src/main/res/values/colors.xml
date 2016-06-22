@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#990099</color>
+    <color name="colorPrimaryDark">#580758</color>
+    <color name="colorAccent">#990099</color>
+    <!-- <color name="colorAccent">#27ae61</color>  -->
+    <color name="colorButton">#27ae61</color>
+    <color name="colorBotonSinPresionar">#990099</color>
+    <color name="colorBotonPresionado">#E17FE1</color>
+    <color name="colorBlanco">#FFFFFF</color>
+    <color name="colorRojoErrores">#f40202</color>
+    <color name="colorLetra">#f8919090</color>
+    <color name="descripcionLetra">#999999</color>
+    <color name="title">#222222</color>
+
+
+</resources>

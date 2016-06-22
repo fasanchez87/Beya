@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBlanco"
+    android:fitsSystemWindows="true"
+    tools:context=".activities.Login"
+    >
+
+    <!--<android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>-->
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:background="@drawable/fondo_beya">
+
+
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:descendantFocusability="beforeDescendants"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            >
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp" />
+
+
+
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/input_layout_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/colorAccent">
+
+
+                    <EditText
+                        android:id="@+id/input_email_soporte"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/colorAccent"
+                        android:hint="Asunto"
+                        android:inputType="text"
+                        android:textColor="@color/colorAccent"
+                        android:textColorHint="@color/colorAccent" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/input_layout_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/colorAccent">
+
+                    <EditText
+                        android:id="@+id/input_mensaje_soporte"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/colorAccent"
+                        android:hint="Mensaje"
+                        android:inputType="text"
+                        android:textColor="@color/colorAccent"
+                        android:textColorHint="@color/colorAccent" />
+                </android.support.design.widget.TextInputLayout>
+
+
+                <Button
+                    android:id="@+id/boton_enviar_soporte"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/css_buttons"
+                    android:text="Enviar"
+                    android:textColor="@android:color/white" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp" />
+
+            </LinearLayout>
+
+
+
+
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom"
+                android:gravity="bottom"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp">
+
+                    <ProgressBar
+                        android:id="@+id/progressBarSoporte"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:indeterminateTint="@color/colorAccent"
+                        android:indeterminateTintMode="src_atop"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/textViewProgressBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/progressBar"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:text=""
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/colorAccent"
+                        android:visibility="gone" />
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
+
+

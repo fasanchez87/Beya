@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:clickable="true"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textViewIDServicioAceptacionServicios"
+        android:textColor="@color/title"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/textViewNombreServicioAceptacionServicios"
+        android:textColor="@color/title"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MANICURE"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/textViewDescServicio" />
+
+    <TextView
+        android:id="@+id/textViewValorServicioAceptacionServicios"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="17,000 COP"
+        android:layout_below="@+id/textViewNombreServicioAceptacionServicios"
+         />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/checkBoxServicioAceptacionServicios"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignBottom="@+id/textViewValorServicioAceptacionServicios" />
+
+
+</RelativeLayout>

@@ -1,0 +1,40 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+
+    <!-- <item android:id="@+id/action_settings"
+         android:title="@string/action_settings"
+         android:orderInCategory="100"
+         app:showAsAction="never" />-->
+
+
+
+
+
+    <item android:id="@+id/action_revisar_servicios_solicitud"
+        android:title="Revisar Servicios"
+        android:icon="@drawable/ic_playlist_add_check_white_24dp"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom"/>
+    <item android:id="@+id/action_aceptar_servicio_aceptacion_servicio_detallado"
+        android:title="Aceptar Solicitud"
+        android:icon="@drawable/ic_done_all_white_24dp"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom" />
+    <item android:id="@+id/action_observar_servicios"
+        android:title="Detalles Servicios"
+        android:icon="@drawable/ic_visibility_white_24dp"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom" />
+    <item android:id="@+id/action_cancelar_aceptacion_servicio_esteticista"
+        android:title="Cancelar Servicio"
+        android:icon="@drawable/ic_highlight_off_white_24dp"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom"
+        android:visible="false"/>
+
+
+
+
+
+</menu>

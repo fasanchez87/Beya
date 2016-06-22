@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="15dp"
+    >
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Procedera a aceptar la solicitud, por favor escoja el tiempo de llegada:"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+    <RadioGroup
+        android:id="@+id/radioGroupTiemposLlegadaEsteticista"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+    <RadioButton
+        android:id="@+id/radioButtonDiezMinutos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="10 Minutos"
+        android:onClick="onRadioButtonClicked"/>
+
+    <RadioButton
+        android:id="@+id/radioButtonTreintaMinutos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="30 Minutos"
+        android:onClick="onRadioButtonClicked"/>
+
+    <RadioButton
+        android:id="@+id/radioButtonCincuentaMinutos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="50 Minutos"
+        android:onClick="onRadioButtonClicked"/>
+    </RadioGroup>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CONFIRMAR"
+            android:id="@+id/buttonAceptarServicioDialogAceptacionServicio"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_weight="1"
+            android:background="@drawable/css_buttons"
+            android:textColor="#FFFFFF"/>
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="fill_parent"
+            />
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CANCELAR"
+            android:id="@+id/buttonCancelarServicioDialogAceptacionServicio"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_weight="1"
+            android:background="@drawable/css_buttons"
+            android:textColor="#FFFFFF"/>
+
+    </LinearLayout>
+
+</LinearLayout>

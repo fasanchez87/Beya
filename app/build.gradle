@@ -1,0 +1,60 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        config {
+            keyPassword 'system1987'
+            storeFile file('D:/Key Beya App/key_beta.jks')
+            storePassword 'system1987'
+            keyAlias 'Beya'
+        }
+    }
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+    defaultConfig {
+        applicationId "com.techambits.beya"
+        minSdkVersion 19
+        targetSdkVersion 23
+        versionCode 18
+        versionName "1.18"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.config
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    //compile 'testfairy:testfairy-android-sdk:1.+@aar'
+    /*compile 'me.leolin:ShortcutBadger:1.1.4'*/
+    
+
+
+
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.+'
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:design:23.3.0'
+    compile 'com.mcxiaoke.volley:library-aar:1.0.1'
+    compile 'com.google.code.gson:gson:2.5'
+    compile 'com.android.support:support-v4:23.3.0'
+    compile 'com.google.android.gms:play-services:8.4.0'
+    compile 'com.google.android.gms:play-services-maps:8.4.0'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.android.support:recyclerview-v7:23.3.0'
+}
+
+apply plugin: 'com.google.gms.google-services'
+
+
+
+
+
+
+

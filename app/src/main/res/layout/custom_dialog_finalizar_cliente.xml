@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="15dp"
+    >
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <TextView
+        android:id="@+id/textViewValorTotalServicioCliente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="23sp"
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿Cual es tu calificación y observaciones del servicio prestado?"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:singleLine = "true"
+        android:id="@+id/editTextObservacionClienteFinalizarServicio"
+        android:hint="Comentarios del servicio"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+    <RadioGroup
+        android:id="@+id/radioGroupCalificacionEsteticista"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <RadioButton
+            android:id="@+id/radioButton1Estrellas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1 Estrellas"
+            android:onClick="onRadioButtonClicked"/>
+
+        <RadioButton
+            android:id="@+id/radioButton2Estrellas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2 Estrellas"
+            android:onClick="onRadioButtonClicked"/>
+
+        <RadioButton
+            android:id="@+id/radioButton3Estrellas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3 Estrellas"
+            android:onClick="onRadioButtonClicked"/>
+
+
+        <RadioButton
+            android:id="@+id/radioButton4Estrellas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="4 Estrellas"
+            android:onClick="onRadioButtonClicked"/>
+
+
+        <RadioButton
+            android:id="@+id/radioButton5Estrellas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="5 Estrellas"
+            android:onClick="onRadioButtonClicked"/>
+    </RadioGroup>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="FINALIZAR"
+            android:id="@+id/buttonEnviarCalificacionEsteticista"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_weight="1"
+            android:background="@drawable/css_buttons"
+            android:textColor="#FFFFFF"/>
+
+      <!--  <View
+            android:layout_width="10dp"
+            android:layout_height="fill_parent"
+            />
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CANCELAR"
+            android:id="@+id/buttonCancelarServicioDialogAceptacionServicio"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_weight="1"
+            android:background="@drawable/css_buttons"
+            android:textColor="#FFFFFF"/>-->
+
+    </LinearLayout>
+
+</LinearLayout>

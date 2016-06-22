@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".activities.SolitudServicioDetallada">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/fondo_beya"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".MainActivity">
+
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <com.techambits.beya.CircularImageView.CircularNetworkImageView
+                android:id="@+id/imagenClienteSolicitudServicioDetallada"
+                android:layout_width="95dp"
+                android:layout_height="95dp"
+                android:padding="2dip"
+                android:visibility="visible"
+                android:paddingRight="6dp"
+                android:adjustViewBounds="true"
+                android:layout_gravity="center"
+                android:layout_alignParentTop="true"
+
+                />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/nombreClienteSolicitudServicioDetallada"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="6dp"
+                    android:text="Fabio Mejia"
+                    android:textColor="@color/colorAccent"
+
+
+                    />
+
+
+                <TextView
+                    android:id="@+id/telefonoClienteSolicitudServicioDetallada"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="6dp"
+                    android:text="3108360219"
+                    android:autoLink="phone"
+                    />
+
+                <TextView
+                    android:id="@+id/DireccionClienteSolicitudServicioDetallada"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="6dp"
+                    android:text="Carrera 47 30-71 primer piso"
+                    android:textColor="@color/colorAccent"
+
+                    />
+
+                <TextView
+                    android:id="@+id/fechaClienteSolicitudServicioDetallada"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="6dp"
+                    android:text="Fecha Solicitud"
+                    android:textColor="@color/colorAccent"
+
+                    />
+
+                <!--  <TextView
+                      android:id="@+id/tiempoLlegadaClienteSolicitudServicioDetallada"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textStyle="bold"
+                      android:textSize="15dip"
+                      android:paddingLeft="6dp"
+                      android:text="Llego en aprox: "
+                      android:textColor="@color/colorAccent"/>-->
+
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/nombrsdsdeCliedfsdfnteAceptacionServicio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="6dp"
+                        android:text="Subtotal: "
+                        android:textStyle="bold"
+                        android:textColor="#FFA500"
+                        />
+
+                    <TextView
+                        android:id="@+id/precioClienteSolicitudServicioDetallada"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="130.000 COP"
+                        android:textStyle="bold"
+                        android:textColor="#FFA500"
+                        />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <fragment
+            android:id="@+id/mapClienteSolicitudServicioViaPush"
+            class="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_servicioSolictadoViaPush"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_weight="0"
+            android:scrollbars="vertical"
+            android:visibility="gone" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonLlegadaEsteticista"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_weight="1"
+                android:background="@drawable/css_button_cancelar_solicitud"
+                android:text="HE LLEGADO"
+                android:textColor="#FFFFFF"
+                android:enabled="false"
+                android:visibility="gone"/>
+
+            <Space
+                android:layout_width="7dp"
+                android:layout_height="0dp" />
+
+            <Button
+                android:id="@+id/buttonFinalizarServicio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_weight="1"
+                android:background="@drawable/css_button_finalizar_servicio"
+                android:text="FINALIZAR"
+                android:textColor="#FFFFFF"
+                android:visibility="gone"/>
+
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>

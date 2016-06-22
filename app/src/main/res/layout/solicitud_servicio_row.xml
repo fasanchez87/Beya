@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:clickable="true"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/textViewCodigoSol"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SOLICITUD N°: "
+        android:textColor="@color/colorAccent"
+
+        />
+
+    <TextView
+        android:id="@+id/textViewFechaSolicitudServicio"
+        android:layout_below="@id/textViewCodigoSol"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Abril 08 de 2016"
+        android:textColor="@color/colorAccent"
+        android:layout_weight="1"
+        android:ellipsize="none"
+        android:maxLines="100"
+        android:scrollHorizontally="false"
+        />
+
+    <TextView
+        android:id="@+id/textViewHoraSolicitudServicio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="11:00 AM"
+        android:layout_weight="1"
+        android:ellipsize="none"
+        android:textColor="@color/colorAccent"
+        android:maxLines="100"
+        android:scrollHorizontally="false"
+        android:layout_below="@+id/textViewFechaSolicitudServicio"
+        android:layout_alignParentEnd="true" />
+
+    <!--<TextView
+        android:id="@+id/textViewLugarSolicitudServicio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Antioquía"
+        android:layout_below="@+id/textViewUbicacionSolicitudServicio"
+        android:layout_alignParentStart="true" />-->
+
+   <!-- <TextView
+        android:id="@+id/textViewUbicacionSolicitudServicio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Medellín"
+        android:layout_below="@+id/textViewHoraSolicitudServicio"
+        android:layout_alignParentStart="true" />-->
+
+    <TextView
+        android:id="@+id/esAtendidaSolicitudServicio"
+        android:textColor="@color/title"
+        android:text="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_below="@+id/textViewHoraSolicitudServicio"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView2"
+        android:src="@drawable/ic_chevron_right_black_24dp"
+        android:layout_above="@+id/textViewHoraSolicitudServicio"
+        android:layout_alignParentEnd="true"
+        android:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/textViewCodigoSolicitud"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textColor="@color/colorAccent"
+
+        android:layout_alignTop="@+id/esAtendidaSolicitudServicio"
+        android:layout_toEndOf="@+id/textViewCodigoSol" />
+
+
+</RelativeLayout>

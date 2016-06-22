@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="Servicios">
+        <menu>
+            <group
+                android:id="@+id/group_1"
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_mis_servicios"
+                    android:icon="@drawable/ic_assignment_turned_in_black_48dp"
+                    android:title="Mis Servicios" />
+                <item
+                    android:id="@+id/nav_solicitar_servicio"
+                    android:icon="@drawable/ic_add_alert_black_48dp"
+                    android:title="Solicitar Servicio" />
+                <item
+                    android:id="@+id/nav_historial_servicios"
+                    android:icon="@drawable/ic_find_in_page_black_48dp"
+                    android:title="Historial de Servicios" />
+                <item
+                    android:id="@+id/nav_quiero_ser_esteticista"
+                    android:icon="@drawable/ic_pan_tool_black_48dp"
+                    android:title="Trabaje con nosotros" />
+
+                <item
+                    android:id="@+id/nav_soporte"
+                    android:icon="@drawable/ic_textsms_black_48dp"
+                    android:title="Soporte" />
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="Esteticista">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_activar_geolocalizacion"
+                    android:icon="@drawable/ic_announcement_black_48dp"
+                    app:actionViewClass="android.support.v7.widget.SwitchCompat"
+                    app:showAsAction="always"
+                    android:title="Servicios Disponibles" />
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="Cuenta">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_configuracion"
+                    android:icon="@drawable/ic_menu_manage"
+                    android:title="Configuración" />
+                <item
+                    android:id="@+id/nav_terminos_condiciones"
+                    android:icon="@drawable/ic_security_black_48dp"
+                    android:title="Términos y Condiciones" />
+                <item
+                    android:id="@+id/nav_cerrar_sesion"
+                    android:icon="@drawable/ic_exit_to_app_black_48dp"
+                    android:title="Cerrar Sesión" />
+            </group>
+        </menu>
+    </item>
+
+</menu>
