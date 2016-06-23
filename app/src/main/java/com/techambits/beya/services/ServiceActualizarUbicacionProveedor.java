@@ -167,7 +167,7 @@ public class ServiceActualizarUbicacionProveedor extends Service implements Loca
             }
             else
             {
-                Toast.makeText(getApplicationContext(), "SIN CONEXION, NO SE PUEDE ACTUALIZAR LA UBICACION.",
+                Toast.makeText(getApplicationContext(), "SIN CONEXION, NO SE PUEDE ACTUALIZAR LA UBICACION, REVISE CONEXIÓN A INTERNET",
                         Toast.LENGTH_SHORT).show();
             }
 
