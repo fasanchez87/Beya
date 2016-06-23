@@ -130,7 +130,7 @@ public class ServiceObtenerUbicacionEsteticista extends Service
             startActivity(aceptacionServicio);
         }
 
-        // TODO Auto-generated method stub
+       /* // TODO Auto-generated method stub
         if (mTimer != null)
         {
             mTimer.cancel();
@@ -143,9 +143,32 @@ public class ServiceObtenerUbicacionEsteticista extends Service
             mTimer = new Timer();
         }
         // schedule task
-        mTimer.scheduleAtFixedRate(new TimeDisplayTimerTask(), 5000, NOTIFY_INTERVAL);
+        mTimer.scheduleAtFixedRate(new TimeDisplayTimerTask(), 5000, NOTIFY_INTERVAL);*/
+        mHandler.postDelayed(ToastRunnable, 5000);
+
         return START_STICKY;
     }
+
+    final Runnable ToastRunnable = new Runnable()
+    {
+        public void run()
+        {
+            if (haveNetworkConnection())
+            {
+                _webServiceObtenerUbicacionEsteticista();
+
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(), "SIN CONEXION, NO SE PUEDE OBTENER LA UBICACION DEL ESTETICISTA, " +
+                                "REVISE CONEXIÓN A INTERNET.",
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            mHandler.postDelayed(ToastRunnable, 2000);
+        }
+
+    };
 
     private  boolean haveNetworkConnection()
     {
@@ -171,7 +194,9 @@ public class ServiceObtenerUbicacionEsteticista extends Service
     {
         // TODO Auto-generated method stub
         super.onDestroy();
-        mTimer.cancel();
+        mHandler.removeCallbacks(ToastRunnable);
+
+//        mTimer.cancel();
        // _webServiceObtenerUbicacionEsteticista();
     }
 
@@ -270,7 +295,9 @@ public class ServiceObtenerUbicacionEsteticista extends Service
                                     setLongitud(Double.parseDouble(ubicacion.getJSONObject(i).getString("longitudUsuario").toString()));
                                     setFechaMovimiento(ubicacion.getJSONObject(i).getString("fecMovimiento").toString());
 
-                                    Log.d("SERVICIO COORDENADAS", ""+getLatitud()+" : "+getLongitud()+" : "+getFechaMovimiento());
+                                   /* Log.d("SERVICIO COORDENADAS", "" + getLatitud() + " : " + getLongitud() + " : " + getFechaMovimiento());
+                                    Toast.makeText(getApplicationContext(), getLatitud() + " : " + getLongitud() + " : " + getFechaMovimiento(),
+                                            Toast.LENGTH_SHORT).show();*/
 
                                 }
 

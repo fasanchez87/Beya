@@ -23,39 +23,37 @@
         android:id="@+id/textViewNombreServicio"
         android:textSize="16dp"
         android:textColor="@color/colorAccent"
-        android:paddingTop="20dp"
-
         android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="MANICURE"
+        android:text="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/textViewValorServicio" />
 
-    <TextView
-        android:id="@+id/textViewDescServicio"
-        android:layout_below="@id/textViewNombreServicio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Arreglo de uñas de las manos.SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS"
-        android:layout_weight="1"
-        android:textColor="@color/colorAccent"
-        android:visibility="gone"
-        android:ellipsize="none"
-        android:maxLines="100"
-        android:scrollHorizontally="false"
-        android:layout_toStartOf="@+id/checkBoxServicio"
-        android:layout_toEndOf="@+id/imageItemService"/>
+    <!-- <TextView
+         android:id="@+id/textViewDescServicio"
+         android:layout_below="@id/textViewNombreServicio"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:text="Arreglo de uñas de las manos.SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS"
+         android:layout_weight="1"
+         android:textColor="@color/colorAccent"
+         android:visibility="gone"
+         android:ellipsize="none"
+         android:maxLines="100"
+         android:scrollHorizontally="false"
+         android:layout_toStartOf="@+id/checkBoxServicio"
+         android:layout_toEndOf="@+id/imageItemService"/>-->
 
     <TextView
         android:id="@+id/textViewValorServicio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="17,000"
         android:textColor="@color/colorAccent"
-
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/imageItemService" />
+        android:layout_toEndOf="@+id/imageItemService"
+        android:text="20000"
+        android:layout_alignBottom="@+id/imageItemService"
+        android:layout_below="@+id/textViewNombreServicio" />
 
 
 
@@ -79,9 +77,9 @@
 
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/imageItemService"
-        android:layout_width="100dp"
+        android:layout_width="70dp"
         android:paddingRight="6dp"
-        android:layout_height="100dp"
+        android:layout_height="70dp"
         android:src="@drawable/beya_historial"
         android:adjustViewBounds="true"
         android:layout_gravity="center"

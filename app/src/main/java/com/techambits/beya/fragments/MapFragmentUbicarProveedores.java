@@ -120,7 +120,7 @@ public class MapFragmentUbicarProveedores extends Fragment implements LocationLi
 
 
     private Timer mTimer = null;
-    public static final long TIEMPO_LIMITE = 120 * 1000; // 2 minute
+    public static final long TIEMPO_LIMITE = 60 * 1000; // 1 minute
     public static final long TIEMPO_INICIO = 1 * 1000; // 1 seconds
     private Handler mHandler = new Handler();
 
@@ -306,10 +306,6 @@ public class MapFragmentUbicarProveedores extends Fragment implements LocationLi
         cargarProveedoresServicios();
 
     }
-
-
-
-
 
 
     @Override

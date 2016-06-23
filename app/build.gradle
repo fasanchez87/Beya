@@ -15,8 +15,8 @@ android {
         applicationId "com.techambits.beya"
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 18
-        versionName "1.18"
+        versionCode 20
+        versionName "1.20"
     }
     buildTypes {
         release {
@@ -34,7 +34,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     //compile 'testfairy:testfairy-android-sdk:1.+@aar'
     /*compile 'me.leolin:ShortcutBadger:1.1.4'*/
-    
+
 
 
 

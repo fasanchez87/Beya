@@ -133,7 +133,7 @@ public class ServiceActualizarUbicacionProveedor extends Service implements Loca
             Log.d(TAG, "Location update resumed .....................");
         }
         // TODO Auto-generated method stub
-        if (mTimer != null)
+       /* if (mTimer != null)
         {
             mTimer.cancel();
         }
@@ -143,9 +143,38 @@ public class ServiceActualizarUbicacionProveedor extends Service implements Loca
             mTimer = new Timer();
         }
         // schedule task
-        mTimer.scheduleAtFixedRate(new TimeDisplayTimerTask(), 5000, NOTIFY_INTERVAL);
+        mTimer.scheduleAtFixedRate(new TimeDisplayTimerTask(), 5000, NOTIFY_INTERVAL);*/
+        mHandler.postDelayed(ToastRunnable, 10000);
+
         return START_STICKY;
     }
+
+    final Runnable ToastRunnable = new Runnable()
+    {
+        public void run()
+        {
+            if(haveNetworkConnection())
+            {
+                _webServiceUpdatePositionProvider( ( mLatitude + ":" + mLongitude ) ,
+                        sharedPreferences.getString("serialUsuario") , sharedPreferences.getString("statusOnline"));
+
+                Log.i("POSITIONX", "" + mLatitude + " : " + mLongitude);
+                Log.i("POSITIONX", "" + sharedPreferences.getString("serialUsuario"));
+                Log.i("POSITIONX", "" + sharedPreferences.getString("statusOnline"));
+                Log.i("POSITIONX", "" + sharedPreferences.getString("TOKEN"));
+                Log.i("POSITIONX", "" + sharedPreferences.getString("MyToken"));
+
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(), "SIN CONEXION, NO SE PUEDE ACTUALIZAR LA UBICACION.",
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            mHandler.postDelayed(ToastRunnable, 5000);
+        }
+
+    };
 
     private boolean isGooglePlayServicesAvailable()
     {
@@ -169,11 +198,11 @@ public class ServiceActualizarUbicacionProveedor extends Service implements Loca
         /*mTimer.cancel();
         _webServiceUpdatePositionProvider((mLatitude + ":" + mLongitude),
                 sharedPreferences.getString("serialUsuario"), sharedPreferences.getString("statusOnline"));*/
-
+        //mHandler.removeCallbacks(ToastRunnable);
         Log.e(TAG, "onDestroy");
         mGoogleApiClient.disconnect();
         Log.d(TAG, "isConnected ...............: " + mGoogleApiClient.isConnected());
-       // mTimer.cancel();
+        // mTimer.cancel();
         super.onDestroy();
 
     }

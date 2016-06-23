@@ -45,7 +45,7 @@ public class ServicioDetalleHistorial extends RecyclerView.Adapter <ServicioDeta
 
             idServicio= (TextView) view.findViewById(R.id.textViewIDServicio);
             nombreServicio = (TextView) view.findViewById(R.id.textViewNombreServicio);
-            descripcionServicio = (TextView) view.findViewById(R.id.textViewDescServicio);
+            //descripcionServicio = (TextView) view.findViewById(R.id.textViewDescServicio);
             valorServicio = (TextView) view.findViewById(R.id.textViewValorServicio);
             imagenServicio = (NetworkImageView) view.findViewById(R.id.imageItemService);
         }
@@ -87,7 +87,7 @@ public class ServicioDetalleHistorial extends RecyclerView.Adapter <ServicioDeta
         holder.imagenServicio.setErrorImageResId(R.drawable.ic_blower);// en caso de error poner esta imagen.
         holder.idServicio.setText(servicio.getId());
         holder.nombreServicio.setText(servicio.getNombreServicio());
-        holder.descripcionServicio.setText(servicio.getDescripcionServicio());
+//        holder.descripcionServicio.setText(servicio.getDescripcionServicio());
         holder.valorServicio.setText("$"+nf.format(Integer.parseInt(servicio.getValorServicio())));
 
     }
