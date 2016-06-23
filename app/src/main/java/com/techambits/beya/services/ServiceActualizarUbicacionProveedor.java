@@ -130,7 +130,7 @@ public class ServiceActualizarUbicacionProveedor extends Service implements Loca
         if (mGoogleApiClient.isConnected())
         {
             startLocationUpdates();
-            Log.d(TAG, "Location update resumed .......................");
+            Log.d(TAG, "Location update resumed ........................");
         }
         // TODO Auto-generated method stub
        /* if (mTimer != null)
