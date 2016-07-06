@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
@@ -53,6 +54,7 @@ public class Registro extends AppCompatActivity
     TextInputLayout textInputLayoutNameUser;
     TextInputLayout textInputLayoutApellidoUser;
     TextInputLayout textInputLayoutEmailUser;
+    TextInputLayout textInputLayoutConfirmarEmailUser;
     TextInputLayout textInputLayoutClaveUser;
     TextInputLayout textInputLayoutDocumentoUser;
 
@@ -70,6 +72,7 @@ public class Registro extends AppCompatActivity
     public EditText EditTextNameUser;
     EditText EditTextApellidoUser;
     EditText EditTextEmailUser;
+    EditText EditTextConfirmarEmailUser;
     EditText EditTextClaveUser;
     EditText EditTextDocumentoUser;
 
@@ -119,12 +122,18 @@ public class Registro extends AppCompatActivity
         textInputLayoutNameUser = (TextInputLayout) findViewById(R.id.input_layout_nombre_registro);
         textInputLayoutApellidoUser = (TextInputLayout) findViewById(R.id.input_layout_apellido_registro);
         textInputLayoutEmailUser = (TextInputLayout) findViewById(R.id.input_layout_email_registro);
+
+        textInputLayoutConfirmarEmailUser = (TextInputLayout) findViewById(R.id.input_layout_confirmar_email_registro);//
+
         textInputLayoutClaveUser = (TextInputLayout) findViewById(R.id.input_layout_clave_registro);
         textInputLayoutDocumentoUser = (TextInputLayout) findViewById(R.id.input_layout_documento_registro);
 
         EditTextNameUser = (EditText) findViewById(R.id.edit_text_nombre_registro);
         EditTextApellidoUser = (EditText) findViewById(R.id.edit_text_apellido_registro);
         EditTextEmailUser = (EditText) findViewById(R.id.edit_text_email_registro);
+
+        EditTextConfirmarEmailUser = (EditText) findViewById(R.id.edit_text_confirmar_email_registro);//
+
         EditTextClaveUser = (EditText) findViewById(R.id.edit_text_clave_registro);
         EditTextDocumentoUser = (EditText) findViewById(R.id.edit_text_documento_registro);
 
@@ -164,12 +173,16 @@ public class Registro extends AppCompatActivity
         EditTextNameUser.addTextChangedListener(new RevisorText(EditTextNameUser));
         EditTextApellidoUser.addTextChangedListener(new RevisorText(EditTextApellidoUser));
         EditTextEmailUser.addTextChangedListener(new RevisorText(EditTextEmailUser));
+
+        EditTextConfirmarEmailUser.addTextChangedListener(new RevisorText(EditTextConfirmarEmailUser));
+
         EditTextDocumentoUser.addTextChangedListener(new RevisorText(EditTextDocumentoUser));
         EditTextTelefonoUser.addTextChangedListener(new RevisorText(EditTextTelefonoUser));
         EditTextDireccionUser.addTextChangedListener(new RevisorText(EditTextDireccionUser));
         EditTextCiudadUser.addTextChangedListener(new RevisorText(EditTextCiudadUser));
         EditTextDepartamentoUser.addTextChangedListener(new RevisorText(EditTextDepartamentoUser));
         EditTextClaveUser.addTextChangedListener(new RevisorText(EditTextClaveUser));
+
 
 
 
@@ -186,6 +199,36 @@ public class Registro extends AppCompatActivity
 
     public void setEmailDisponible(boolean emailDisponible) {
         this.emailDisponible = emailDisponible;
+    }
+
+    private boolean validateConfirmarEmail()
+    {
+        String email = EditTextEmailUser.getText().toString().trim();
+        String email_nuevo = EditTextConfirmarEmailUser.getText().toString();
+
+        if (email_nuevo.trim().isEmpty())
+        {
+            EditTextConfirmarEmailUser.setError("Por favor, confirme su email");//cambiar a edittext en register!!
+            requestFocus(EditTextConfirmarEmailUser);
+            return false;
+        }
+
+        else
+
+        if(!email_nuevo.equals(email))
+        {
+            EditTextConfirmarEmailUser.setError("Los email no coinciden");//cambiar a edittext en register!!
+            requestFocus(EditTextConfirmarEmailUser);
+            return false;
+        }
+
+        else
+        {
+
+            textInputLayoutConfirmarEmailUser.setErrorEnabled(false);
+        }
+
+        return true;
     }
 
     private boolean ValidarFormulario()
@@ -205,8 +248,12 @@ public class Registro extends AppCompatActivity
             return false;
         }
 
-        if (!validateDocumento())
+        if (!validateConfirmarEmail())
         {
+            return false;
+        }
+
+        if (!validateDocumento()) {
             return false;
         }
 
@@ -220,8 +267,7 @@ public class Registro extends AppCompatActivity
             return false;
         }
 
-        if (!validateCiudad())
-        {
+        if (!validateCiudad()) {
             return false;
         }
 
@@ -234,7 +280,6 @@ public class Registro extends AppCompatActivity
         {
             return false;
         }
-
 
 
 
@@ -607,6 +652,10 @@ public class Registro extends AppCompatActivity
                 case R.id.edit_text_documento_registro:
                     validateDocumento();
                     break;
+
+                case R.id.edit_text_confirmar_email_registro:
+                    validateConfirmarEmail();
+                    break;
             }
 
         }
@@ -923,6 +972,8 @@ public class Registro extends AppCompatActivity
         };
 
         ControllerSingleton.getInstance().addToReqQueue(jsonObjReq, "");
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(20000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
 
     }
 

@@ -10,6 +10,8 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
         android:text="Procedera a aceptar la solicitud, por favor escoja el tiempo de llegada:"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -19,7 +21,8 @@
     <RadioGroup
         android:id="@+id/radioGroupTiemposLlegadaEsteticista"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:checkedButton="@+id/radioButtonDiezMinutos">
 
     <RadioButton
         android:id="@+id/radioButtonDiezMinutos"

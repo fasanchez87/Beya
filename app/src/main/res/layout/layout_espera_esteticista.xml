@@ -31,6 +31,16 @@
         android:textColor="@color/colorAccent"/>
     <Space
         android:layout_width="match_parent"
-        android:layout_height="100dp" />
+        android:layout_height="30dp" />
+    <Button
+        android:id="@+id/btn_cancelar_dialog_espera_esteticista"
+        android:layout_width="227dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/css_buttons"
+        android:text="CANCELAR SOLICITUD"
+        android:textColor="@android:color/white" />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
 
 </LinearLayout>

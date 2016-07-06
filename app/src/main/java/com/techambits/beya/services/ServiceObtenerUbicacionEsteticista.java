@@ -89,6 +89,10 @@ public class ServiceObtenerUbicacionEsteticista extends Service
     public int onStartCommand(Intent intent, int flags, int startId)
     {
 
+        Log.w("INTENTO",""+startId);
+
+
+
         if(sharedPreferences.getBoolean("isSaveInstanceState"))
         {
             Intent aceptacionServicio = new Intent(this,AceptacionServicio.class);

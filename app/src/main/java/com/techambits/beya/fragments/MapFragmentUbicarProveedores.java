@@ -118,9 +118,8 @@ public class MapFragmentUbicarProveedores extends Fragment implements LocationLi
     public static AlertDialog alertDialogEsperaEsteticista;
 
 
-
     private Timer mTimer = null;
-    public static final long TIEMPO_LIMITE = 60 * 1000; // 1 minute
+    public static final long TIEMPO_LIMITE = 420 * 1000; // 7 minute
     public static final long TIEMPO_INICIO = 1 * 1000; // 1 seconds
     private Handler mHandler = new Handler();
 
@@ -227,6 +226,8 @@ public class MapFragmentUbicarProveedores extends Fragment implements LocationLi
                     serviceIntentOrdenServicio.putExtra("codigoCliente", codigoCliente);
                     serviceIntentOrdenServicio.putExtra("codigoSolicitud", codigoSolicitud);
                     serviceIntentOrdenServicio.putExtra("codigoEsteticista", codigoEsteticista);
+                    serviceIntentOrdenServicio.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
                     context.startService(serviceIntentOrdenServicio);
                     //startService(new Intent(getBaseContext(), ServiceObtenerUbicacionEsteticista.class));
 
@@ -461,6 +462,7 @@ public class MapFragmentUbicarProveedores extends Fragment implements LocationLi
                 dialog.dismiss();
             }
         });
+
 
         dialog.show();
 
@@ -712,6 +714,7 @@ public class MapFragmentUbicarProveedores extends Fragment implements LocationLi
     {
         LayoutInflater inflater = MapFragmentUbicarProveedores.this.getActivity().getLayoutInflater();
         View alertLayout = inflater.inflate(R.layout.layout_espera_esteticista, null);
+
         GifImageView gifImageView =(GifImageView) alertLayout.findViewById(R.id.giv_demo);
         try
         {
@@ -730,6 +733,29 @@ public class MapFragmentUbicarProveedores extends Fragment implements LocationLi
         }
 
         final TextView editTextDireccionDomicilio = (TextView) alertLayout.findViewById(R.id.textViewEsperaEsteticistas);
+        final Button btn_cancelar_dialog_espera_esteticista = (Button) alertLayout.findViewById(R.id.btn_cancelar_dialog_espera_esteticista);
+
+
+        btn_cancelar_dialog_espera_esteticista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+
+                _webServiceCancelarSolicitudServicioCliente(codigoSolicitud, "0");
+
+                alertDialogEsperaEsteticista.dismiss();
+                countDownTimer.cancel();
+                //        MapFragmentUbicarProveedores.alertDialog.dismiss();
+                alertDialogBuilder.show().dismiss();
+
+                android.support.v4.app.FragmentManager fragmentManager = getFragmentManager();
+                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frame_container, new SolicitarServicio());
+                fragmentTransaction.commit();
+
+
+            }
+        });
 
 
         AlertDialog.Builder alert = new AlertDialog.Builder(MapFragmentUbicarProveedores.this.getActivity());
@@ -1061,8 +1087,9 @@ public class MapFragmentUbicarProveedores extends Fragment implements LocationLi
 
         };
 
-        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(10000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         ControllerSingleton.getInstance().addToReqQueue(jsonObjReq,"");
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(20000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
 
     }
 
@@ -1295,6 +1322,8 @@ public class MapFragmentUbicarProveedores extends Fragment implements LocationLi
         };
 
         ControllerSingleton.getInstance().addToReqQueue(jsonObjReq, "");
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(20000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
     }
 
 

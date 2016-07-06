@@ -22,12 +22,14 @@
     <TextView
         android:id="@+id/textViewNombreServicio"
         android:textSize="16dp"
-        android:paddingTop="20dp"
-
+        android:text="Arreglo de uñas de las massssssssssssssssssssssssssnos.SSS"
         android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="MANICURE"
+        android:layout_alignRight="@+id/textViewValorServicio"
+        android:layout_alignEnd="@+id/textViewValorServicio"
+        android:layout_below="@+id/textViewIDServicio"
+        android:layout_alignLeft="@+id/textViewValorServicio"
         android:layout_alignStart="@+id/textViewValorServicio" />
 
     <TextView
@@ -49,7 +51,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="17,000"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/textViewNombreServicio"
+        android:layout_toRightOf="@+id/imageItemService"
         android:layout_toEndOf="@+id/imageItemService" />
 
 

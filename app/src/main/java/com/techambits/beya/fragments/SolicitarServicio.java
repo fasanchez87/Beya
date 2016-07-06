@@ -309,35 +309,6 @@ public class SolicitarServicio extends Fragment
 
         _urlWebService = vars.ipServer.concat("/ws/ObtenerProveedoresServicios");
 
-
-
-
-        /*progressBar.setVisibility(View.VISIBLE);
-        buttonSeleccionarServicios.setVisibility(View.GONE);*/
-
-/*        Cache.Entry entry = cache.get(_urlWebService);
-        if(entry != null)
-        {
-            try
-            {
-                String data = new String(entry.data, "UTF-8");
-                Log.e("Cache",""+data);
-                // handle data, like converting it to xml, json, bitmap etc.,
-            }
-            catch (UnsupportedEncodingException e)
-            {
-                e.printStackTrace();
-            }
-        }
-        else
-
-        {
-            Log.e("Cache","empty");
-
-
-            // Cached response doesn't exists. Make network call here
-        }*/
-
         JsonArrayRequest jsonObjReq = new JsonArrayRequest(_urlWebService,
                 new Response.Listener<JSONArray>()
                 {

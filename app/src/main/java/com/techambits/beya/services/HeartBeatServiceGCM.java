@@ -36,7 +36,7 @@ public class HeartBeatServiceGCM extends Service
     {
         super.onStartCommand(intent, flags, startId);
 
-        mHandler.postDelayed( ToastRunnable, 2000);
+        mHandler.postDelayed(ToastRunnable, 2000);
 
 
         return START_STICKY;
@@ -47,38 +47,23 @@ public class HeartBeatServiceGCM extends Service
     {
         public void run()
         {
-            getApplicationContext().sendBroadcast(new Intent("com.google.android.intent.action.GTALK_HEARTBEAT"));
-            getApplicationContext().sendBroadcast(new Intent("com.google.android.intent.action.MCS_HEARTBEAT"));
-            Log.w("GCM", "Enviado latido ahora!");
+            if(haveNetworkConnection())
+            {
+                getApplicationContext().sendBroadcast(new Intent("com.google.android.intent.action.GTALK_HEARTBEAT"));
+                getApplicationContext().sendBroadcast(new Intent("com.google.android.intent.action.MCS_HEARTBEAT"));
+                Log.w("GCM", "Enviado latido ahora!");
+            }
+           /* else
+            {
+                Toast.makeText(getApplicationContext(), "SIN CONEXIÓN A INTERNET",
+                        Toast.LENGTH_SHORT).show();
+            }*/
+
             mHandler.postDelayed(ToastRunnable, 5000);
+
+
         }
     };
-
-
-    class TimeDisplayTimerTask extends TimerTask
-    {
-        @Override
-        public void run()
-        {
-            // run on another thread
-            mHandler.post(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    if(haveNetworkConnection())
-                    {
-                        getApplicationContext().sendBroadcast(new Intent("com.google.android.intent.action.GTALK_HEARTBEAT"));
-                        getApplicationContext().sendBroadcast(new Intent("com.google.android.intent.action.MCS_HEARTBEAT"));
-                        Log.w("GCM","Enviado latido ahora!");
-
-                    }
-                }
-
-            });
-        }
-
-    }
 
     private boolean haveNetworkConnection()
     {

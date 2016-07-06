@@ -13,10 +13,10 @@ android {
     buildToolsVersion "23.0.2"
     defaultConfig {
         applicationId "com.techambits.beya"
-        minSdkVersion 19
+        minSdkVersion 16
         targetSdkVersion 23
-        versionCode 20
-        versionName "1.20"
+        versionCode 28
+        versionName "1.28"
     }
     buildTypes {
         release {

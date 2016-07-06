@@ -2,6 +2,7 @@ package com.techambits.beya.activities;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -102,6 +103,8 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
     TextView nombreEsteticista, apellidoEsteticista, kilometrosDistanciaEsteticista,
             tiempoLlegadaEsteticista, telefonoEsteticistaAceptacionServicios;
 
+    private int i = 0;
+
     private String calificacionEsteticista;
 
     private String codigoBono;
@@ -145,6 +148,7 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
     GoogleMap mGoogleMap;
 
 
+
     private boolean isCheckedSwitch;
 
     Spinner mSprPlaceType;
@@ -177,7 +181,7 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
 
     private gestionSharedPreferences sharedPreferences;
 
-    ProgressBar progressBar;
+    //ProgressBar progressBar;
 
     JSONArray jsonArray;
 
@@ -621,11 +625,15 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
         LocalBroadcastManager.getInstance(this.getApplicationContext()).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(Config.PUSH_NOTIFICATION_CANCELAR_SERVICIO_ESTETICISTA));
 
+        NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.cancelAll();
+
 
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
 
         final NumberFormat nf = NumberFormat.getNumberInstance(Locale.GERMAN);
 
@@ -640,9 +648,18 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
                             @Override
                             public void onClick(DialogInterface dialog, int id)
                             {
-                                _webNotificarLlegadaEsteticista(codigoSolicitud);
+                                //Log.w("IMPRESION","EJECUTANO LLEGADA: NotificarLlegadaEsteticista_2");
 
-                                stopService(new Intent(getBaseContext(), ServiceObtenerUbicacionEsteticista.class));
+
+
+
+                                //_webNotificarLlegadaEsteticista(codigoSolicitud);
+
+
+                                //Log.w("IMPRESION", "EJECUTANO LLEGADA: NotificarLlegadaEsteticista_3");
+
+
+
 
                                 mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
                                 mGoogleMap.getUiSettings().setCompassEnabled(true);
@@ -667,6 +684,11 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
                                 mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(17));
 
 
+                                    stopService(new Intent(getBaseContext(), ServiceObtenerUbicacionEsteticista.class));
+                                    _webNotificarLlegadaEsteticista(codigoSolicitud);
+
+
+
 
 
 
@@ -681,7 +703,7 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
                         //startActivity(intent);
                         //finish();
                     }
-                }).show();
+                }).setCancelable(false).show();
                 return true;
 
 
@@ -1035,7 +1057,7 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
 
                 //if(ValorServicio.getValorServicio() == 0)
                 //{
-                // precioTemporalAceptacionServicios.setText(""+nf.format(ValorServicio.getValorServicio()));
+                // precioTemporalAceptacionServicios.setText(""+nf.format(ValorServicio.getValorServicio());
                 precioTemporalAceptacionServicios.setText("$"+nf.format(sharedPreferences.getInt("valorServicio")));
                 valorTotalDescuentoBono = ((sharedPreferences.getInt("valorServicio")) -
                         (sharedPreferences.getInt("valorBono")
@@ -1179,7 +1201,7 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
                                         }
                                     }).show();
 
-                            Log.i("PRUEBA",""+e.getMessage());
+                            Log.i("PRUEBA", "" + e.getMessage());
 
 
                             e.printStackTrace();
@@ -1375,7 +1397,7 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
                                 menuAceptarBono.setVisible(false);
                                 valorBono = 0;
                                 sharedPreferences.putInt("valorBono",0);
-                                sharedPreferences.putBoolean("existeBono",false);
+                                sharedPreferences.putBoolean("existeBono", false);
 
 
                             }
@@ -1793,6 +1815,8 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
 
         // jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(10000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         ControllerSingleton.getInstance().addToReqQueue(jsonObjReq, "");
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(20000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
 
     }
 
@@ -1820,11 +1844,9 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
     {
         _urlWebService = vars.ipServer.concat("/ws/NotificarLlegadaEsteticista");
 
-
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, _urlWebService, null,
                 new Response.Listener<JSONObject>()
                 {
-
                     @Override
                     public void onResponse(JSONObject response)
                     {
@@ -1833,24 +1855,18 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
                             Boolean status = response.getBoolean("status");
                             String message = response.getString("message");
 
+                            Log.w("RESPONSE",""+response);
+
                             if(status)//TARJETA ES VALIDA..
                             {
-
                                 android.text.format.DateFormat df = new android.text.format.DateFormat();
                                 String fechaSolicitud = "" + df.format("yyyy-MM-dd hh:mm:ss", new java.util.Date());
-
 //                                _webServiceValidarExistenciaBono(codigoCliente, fechaSolicitud);
-
-
                                 sharedPreferences.putBoolean("MostrarMenuLlegadaEsticista", false);
-
                                 sharedPreferences.putBoolean("MostrarMenuCancelar", false);
-
-                                sharedPreferences.putBoolean("flagLlegadaEsteticista",true);
-
+                                sharedPreferences.putBoolean("flagLlegadaEsteticista", true);
                                 menuLlegadaEsteticista.setVisible(sharedPreferences.getBoolean("MostrarMenuLlegadaEsticista"));
                                 menuCancelarServicio.setVisible(sharedPreferences.getBoolean("MostrarMenuCancelar"));
-
                             }
 
                             else //TARJETA O TRANSACCION NO ADMITIDA
@@ -1863,13 +1879,9 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
                                             @Override
                                             public void onClick(DialogInterface dialog, int id)
                                             {
-
                                                //VALIDAR BONO EN ESTA OPCION OJO!!
-
                                                 //menuAceptarBono.setVisible(false);
                                                 //menuAceptarBono.setVisible(sharedPreferences.getBoolean("mostrarMenuBono"));
-
-
                                                 sharedPreferences.remove("mostrarMenuBono");
                                                 sharedPreferences.putBoolean("saveInstanceState", false);
                                                 sharedPreferences.putBoolean("isSaveInstanceState",false);
@@ -1881,16 +1893,11 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
                                                 sharedPreferences.remove("valorServicio");
                                                 sharedPreferences.remove("codigoBono");
 
-
                                                 sharedPreferences.putBoolean("MostrarMenuLlegadaEsticista", false);
-
                                                 sharedPreferences.putBoolean("MostrarMenuCancelar", false);
-
-
 
                                                 menuLlegadaEsteticista.setVisible(sharedPreferences.getBoolean("MostrarMenuLlegadaEsticista"));
                                                 menuCancelarServicio.setVisible(sharedPreferences.getBoolean("MostrarMenuCancelar"));
-
 
                                                 sharedPreferences.remove("valorTotalServiciosTemporalSolicitarServicio");
                                                 sharedPreferences.remove("serviciosEscogidos");
@@ -1946,7 +1953,6 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
                     }
 
                 },
-
 
                 new Response.ErrorListener()
                 {
@@ -2034,6 +2040,7 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
                                             //Intent intent = new Intent(Pago.this.getApplicationContext(), Registro.class);
                                             //startActivity(intent);
                                             //finish();
+
                                         }
                                     }).show();
                         }
@@ -2099,8 +2106,9 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
             }
         };
 
-        // jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(10000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        ControllerSingleton.getInstance().addToReqQueue(jsonObjReq, "");
+        Log.w("RESPUESTA", "FIN_WEB_SERVICE");
+        ControllerSingleton.getInstance().addToReqQueue(jsonObjReq);
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(20000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
     }
 
@@ -2126,7 +2134,7 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
 
                                 AlertDialog.Builder builder = new AlertDialog.Builder(AceptacionServicio.this);
                                 builder
-                                .setMessage(message.concat("\nLa multa no fue aplicada por inconvenientes con la tarjeta de crédito del Cliente."))
+                                .setMessage(message)
                                 .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int id)
@@ -2218,7 +2226,7 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
                                             //finish();
                                         }
                                     }).show();
-                            progressBar.setVisibility(View.GONE);
+                            //progressBar.setVisibility(View.GONE);
 
                         }
 
@@ -2240,7 +2248,7 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
                                             //finish();
                                         }
                                     }).show();
-                            progressBar.setVisibility(View.GONE);
+                            //progressBar.setVisibility(View.GONE);
 
                         }
 
@@ -2262,7 +2270,7 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
                                             //finish();
                                         }
                                     }).show();
-                            progressBar.setVisibility(View.GONE);
+                            //.setVisibility(View.GONE);
 
                         }
 
@@ -2284,7 +2292,7 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
                                             //finish();
                                         }
                                     }).show();
-                            progressBar.setVisibility(View.GONE);
+                            //progressBar.setVisibility(View.GONE);
 
                         }
 
@@ -2306,7 +2314,7 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
                                             //finish();
                                         }
                                     }).show();
-                            progressBar.setVisibility(View.GONE);
+                            //progressBar.setVisibility(View.GONE);
                         }
 
                         else
@@ -2327,7 +2335,7 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
                                             //finish();
                                         }
                                     }).show();
-                            progressBar.setVisibility(View.GONE);
+                            //progressBar.setVisibility(View.GONE);
 
                         }
 
@@ -2350,8 +2358,10 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
             }
         };
 
-        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(10000, 6, DefaultRetryPolicy.DEFAULT_MAX_RETRIES));
+        //jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(10000, 6, DefaultRetryPolicy.DEFAULT_MAX_RETRIES));
         ControllerSingleton.getInstance().addToReqQueue(jsonObjReq, "");
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(20000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
     }
 
 

@@ -2,6 +2,7 @@ package com.techambits.beya.activities;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -28,7 +29,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -93,7 +93,6 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
 
     ImageLoader imageLoader = ControllerSingleton.getInstance().getImageLoader();
 
-
     private String _urlWebServiceAceptarSolicitudServicio;
     private String _urlWebServiceCancelarSolicitudServicio;
 
@@ -112,14 +111,10 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
 
     private String tiempoLlegada;
 
-
     private boolean isCheckedSwitch;
 
     private BroadcastReceiver mRegistrationBroadcastReceiver;
 
-
-
-    ProgressBar progressBar;
     private RecyclerView recyclerView;
 
     GoogleMap mGoogleMap;
@@ -140,9 +135,7 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
     GoogleApiClient mGoogleApiClient;
     vars var;
 
-
     Location mCurrentLocation;
-
 
     Gestion gestion;
 
@@ -240,6 +233,7 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
                 {
                     String codigoSolicitud = intent.getExtras().getString("codigoSolicitud");
                     String message = intent.getExtras().getString("message");
+
                     //displayAlertDialogFinalizarServicioCliente(codigoSolicitud);
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(SolitudServicioDetallada.this);
@@ -250,7 +244,6 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
                                 @Override
                                 public void onClick(DialogInterface dialog, int id)
                                 {
-
                                     statusDisponible = "0";
                                     _webServiceActualizarDisponibilidadEsteticista(statusDisponible);
 
@@ -271,10 +264,20 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
 
                 if (intent.getAction().equals(Config.PUSH_NOTIFICATION_LLEGADA_ESTETICISTA))
                 {
-                    sharedPreferences.putBoolean("habilitarbotonLlegadaEsteticista", true);
-                    buttonLlegadaEsteticista.setEnabled(sharedPreferences.getBoolean("habilitarbotonLlegadaEsteticista"));
-
-
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SolitudServicioDetallada.this);
+                    builder
+                            .setTitle("INFORMACIÓN SERVICIO")
+                            . setMessage("El Cliente ha notificado su llegada, por favor dirigirse al Boton HE LLEGADO en la parte posterior y de click" +
+                                    "para proceder a realizar el servicio.")
+                            .setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener()
+                            {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id)
+                                {
+                                    sharedPreferences.putBoolean("habilitarbotonLlegadaEsteticista", true);
+                                    buttonLlegadaEsteticista.setEnabled(sharedPreferences.getBoolean("habilitarbotonLlegadaEsteticista"));
+                                }
+                            }).show().setCancelable(false);
                 }
 
                 else
@@ -293,7 +296,6 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
                                 @Override
                                 public void onClick(DialogInterface dialog, int id)
                                 {
-
                                     statusDisponible = "0";
                                     _webServiceActualizarDisponibilidadEsteticista(statusDisponible);
 
@@ -565,9 +567,6 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState)
     {
-
-
-
         sharedPreferences.putString("keyCodigoSolicitudSeleccionado", keyCodigoSolicitudSeleccionado);
         sharedPreferences.putString("ubicacionCliente", ubicacionCliente);
         sharedPreferences.putString("keyCodigoClienteSolicitudSeleccionada", keyCodigoClienteSolicitudSeleccionada);
@@ -577,8 +576,6 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
         sharedPreferences.putString("costoSolicitud", costoSolicitud);
         sharedPreferences.putString("imgUsuario", imgUsuario);
         sharedPreferences.putString("telefonoCliente", telefonoCliente);
-
-
 
         super.onSaveInstanceState(savedInstanceState);
 
@@ -608,7 +605,7 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
     {
         super.onDestroy();
         LocalBroadcastManager.getInstance(this.getApplicationContext()).unregisterReceiver(mRegistrationBroadcastReceiver);
-        stopService(new Intent(getBaseContext(), ServiceActualizarUbicacionProveedor.class));
+        //stopService(new Intent(getBaseContext(), ServiceActualizarUbicacionProveedor.class));
 
     }
 
@@ -658,32 +655,10 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
 
     }
 
-  /*  @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)
-    {
-        if (keyCode == KeyEvent.KEYCODE_BACK)
-        {
-            sharedPreferences.remove(keyCodigoSolicitudSeleccionado);
-            this.finish();
-            return true;
-        }
-
-        return super.onKeyDown(keyCode, event);
-    }*/
-
-
-
-
-
     @Override
     public void onResume()
     {
         super.onResume();
-
-       /* // register GCM registration complete receiver
-        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter(Config.REGISTRATION_COMPLETE));*/
-        //ShortcutBadger.removeCount(this.getApplicationContext()); //for 1.1.4
 
         // register new push message receiver
         // by doing this, the activity will be notified each time a new message arrives
@@ -696,11 +671,10 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
         LocalBroadcastManager.getInstance(this.getApplicationContext()).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(Config.PUSH_NOTIFICATION_CANCELACION_SERVICIO_TARJETA));
 
+       NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.cancelAll();
 
     }
-
-
-
 
     @Override
     public void onConnected(Bundle bundle)
@@ -818,9 +792,9 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
     {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
-
         // Check which radio button was clicked
-        switch(view.getId()) {
+        switch(view.getId())
+        {
             case R.id.radioButtonDiezMinutos:
                 if (checked)
                     tiempoLlegada = "10";
@@ -828,13 +802,13 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
             case R.id.radioButtonTreintaMinutos:
                 if (checked)
                     tiempoLlegada = "30";
-
-                break;
+                    break;
             case R.id.radioButtonCincuentaMinutos:
                 if (checked)
                     tiempoLlegada = "50";
-
-                break;
+                    break;
+            default:
+                    tiempoLlegada = "10";
         }
     }
 
@@ -850,7 +824,7 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
         final Button buttonCancelarServicioDialogAceptacionServicio = (Button) alertLayout.findViewById(R.id.buttonCancelarServicioDialogAceptacionServicio);
 
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("Confirmar Solicitud");
+        alert.setTitle("TIEMPO DE LLEGADA");
         alert.setView(alertLayout);
         alert.setCancelable(false);
         final AlertDialog dialog = alert.create();
@@ -860,10 +834,8 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
             @Override
             public void onClick(View view)
             {
-
                 //sharedPreferences.putString("statusOnline","0");
                 _webServiceAceptarSolicitudServicios();
-
                 dialog.dismiss();
             }
         });
@@ -992,7 +964,7 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
                 stopService(new Intent(getBaseContext(), ServiceObtenerUbicacionEsteticista.class));*/
 
 
-                statusDisponible = "1";
+                statusDisponible = "0";
                 _webServiceActualizarDisponibilidadEsteticista(statusDisponible);
 
                 sharedPreferences.remove("valorTotalServiciosTemporalSolicitarServicio");
@@ -1022,11 +994,11 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
                 servicio = null;
 
                 String observacionEsteticista = editTextObservacionEsteticistaCancelarServicio.getText().toString();
-                stopService(new Intent(getBaseContext(), ServiceActualizarUbicacionProveedor.class));
+                //stopService(new Intent(getBaseContext(), ServiceActualizarUbicacionProveedor.class));
                 //SERVICIO EN BACKGROUND PARA ACTUALIZAR LA UBICACION DEL PROVEEDOR.
-                isCheckedSwitch = false;
+                isCheckedSwitch = true;
                 sharedPreferences.putBoolean("isCheckedSwitch", isCheckedSwitch);
-                statusOnline = "0";
+                statusOnline = "1";
                 sharedPreferences.putString("statusOnline", statusOnline);
                 _webServiceCancelarSolicitudServicioEsteticista(keyCodigoSolicitudSeleccionado, observacionEsteticista);
                 dialog.dismiss();
@@ -1137,7 +1109,7 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
                                             //finish();
                                         }
                                     }).show();
-                            progressBar.setVisibility(View.GONE);
+                            //progressBar.setVisibility(View.GONE);
 
                         }
 
@@ -1159,7 +1131,7 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
                                             //finish();
                                         }
                                     }).show();
-                            progressBar.setVisibility(View.GONE);
+                            //progressBar.setVisibility(View.GONE);
 
                         }
 
@@ -1181,7 +1153,7 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
                                             //finish();
                                         }
                                     }).show();
-                            progressBar.setVisibility(View.GONE);
+                            //progressBar.setVisibility(View.GONE);
 
                         }
 
@@ -1203,7 +1175,7 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
                                             //finish();
                                         }
                                     }).show();
-                            progressBar.setVisibility(View.GONE);
+                            //progressBar.setVisibility(View.GONE);
 
                         }
 
@@ -1225,7 +1197,7 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
                                             //finish();
                                         }
                                     }).show();
-                            progressBar.setVisibility(View.GONE);
+                           // progressBar.setVisibility(View.GONE);
                         }
 
                         else
@@ -1246,7 +1218,7 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
                                             //finish();
                                         }
                                     }).show();
-                            progressBar.setVisibility(View.GONE);
+                            //progressBar.setVisibility(View.GONE);
 
                         }
 
@@ -1269,8 +1241,9 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
             }
         };
 
-        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(10000, 6, DefaultRetryPolicy.DEFAULT_MAX_RETRIES));
         ControllerSingleton.getInstance().addToReqQueue(jsonObjReq, "");
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(20000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
     }
 
 
@@ -1278,6 +1251,11 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
     {
 
         _urlWebServiceAceptarSolicitudServicio = var.ipServer.concat("/ws/AceptarSolicitudServicio");
+
+        if(tiempoLlegada.toString().isEmpty())//POR DEFECTO 10 MIN.
+        {
+            tiempoLlegada = "10";
+        }
 
         Log.w("ESTETICISTA","serialUsuarioEsteticista"+sharedPreferences.getString("serialUsuario"));
         Log.w("ESTETICISTA", "serialUsuarioCliente" + keyCodigoClienteSolicitudSeleccionada);
@@ -1346,7 +1324,7 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
                             {
                                AlertDialog.Builder builder = new AlertDialog.Builder(SolitudServicioDetallada.this);
                                 builder
-                                        .setMessage("Error Solicitud Esteticista: "+message)
+                                        .setTitle("INFORMACIÓN SOLICITUD").setMessage("Aviso: "+message)
                                         .setPositiveButton("Aceptar", new DialogInterface.OnClickListener()
                                         {
                                             @Override
@@ -1413,7 +1391,7 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
                                             //finish();
                                         }
                                     }).show();
-                            progressBar.setVisibility(View.GONE);
+                            //progressBar.setVisibility(View.GONE);
 
                         }
 
@@ -1435,7 +1413,7 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
                                             //finish();
                                         }
                                     }).show();
-                            progressBar.setVisibility(View.GONE);
+                            //progressBar.setVisibility(View.GONE);
 
                         }
 
@@ -1457,7 +1435,7 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
                                             //finish();
                                         }
                                     }).show();
-                            progressBar.setVisibility(View.GONE);
+                            //progressBar.setVisibility(View.GONE);
 
                         }
 
@@ -1479,7 +1457,7 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
                                             //finish();
                                         }
                                     }).show();
-                            progressBar.setVisibility(View.GONE);
+                            //progressBar.setVisibility(View.GONE);
 
                         }
 
@@ -1501,7 +1479,7 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
                                             //finish();
                                         }
                                     }).show();
-                            progressBar.setVisibility(View.GONE);
+                            //progressBar.setVisibility(View.GONE);
                         }
 
                         else
@@ -1522,7 +1500,7 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
                                             //finish();
                                         }
                                     }).show();
-                            progressBar.setVisibility(View.GONE);
+                            //progressBar.setVisibility(View.GONE);
 
                         }
 
@@ -1548,8 +1526,9 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
             }
         };
 
-        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(10000, 6, DefaultRetryPolicy.DEFAULT_MAX_RETRIES));
         ControllerSingleton.getInstance().addToReqQueue(jsonObjReq, "");
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(20000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
     }
 
     public void _webServiceFinalizarServicio(final String comentarioEsteticista)
@@ -1640,7 +1619,7 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
                                             //finish();
                                         }
                                     }).show();
-                            progressBar.setVisibility(View.GONE);
+                            //progressBar.setVisibility(View.GONE);
 
                         }
 
@@ -1662,7 +1641,7 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
                                             //finish();
                                         }
                                     }).show();
-                            progressBar.setVisibility(View.GONE);
+                            //progressBar.setVisibility(View.GONE);
 
                         }
 
@@ -1684,7 +1663,7 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
                                             //finish();
                                         }
                                     }).show();
-                            progressBar.setVisibility(View.GONE);
+                            //progressBar.setVisibility(View.GONE);
 
                         }
 
@@ -1706,7 +1685,7 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
                                             //finish();
                                         }
                                     }).show();
-                            progressBar.setVisibility(View.GONE);
+                            //progressBar.setVisibility(View.GONE);
 
                         }
 
@@ -1728,7 +1707,7 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
                                             //finish();
                                         }
                                     }).show();
-                            progressBar.setVisibility(View.GONE);
+                            //progressBar.setVisibility(View.GONE);
                         }
 
                         else
@@ -1749,7 +1728,7 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
                                             //finish();
                                         }
                                     }).show();
-                            progressBar.setVisibility(View.GONE);
+                            //progressBar.setVisibility(View.GONE);
 
                         }
 
@@ -1765,7 +1744,7 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
                 headers.put("WWW-Authenticate", "xBasic realm=".concat(""));
                 headers.put("codigoSolicitud", keyCodigoSolicitudSeleccionado);
                 headers.put("observaServicio", comentarioEsteticista );
-                headers.put("observaServicio", statusDisponible );
+                //headers.put("observaServicio", statusDisponible );
                 headers.put("MyToken", sharedPreferences.getString("MyToken"));
                 return headers;
 
@@ -1773,8 +1752,9 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
             }
         };
 
-        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(10000, 6, DefaultRetryPolicy.DEFAULT_MAX_RETRIES));
         ControllerSingleton.getInstance().addToReqQueue(jsonObjReq, "");
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(20000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
     }
 
     public void _webServiceActualizarDisponibilidadEsteticista(final String statusDisponible)
@@ -1833,6 +1813,8 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
         };
 
         ControllerSingleton.getInstance().addToReqQueue(jsonObjReq, "");
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(20000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
     }
 
 

@@ -120,6 +120,23 @@
                     android:textColor="@color/colorAccent"/>
             </android.support.design.widget.TextInputLayout>
 
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_confirmar_email_registro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorAccent">
+
+                <EditText
+                    android:id="@+id/edit_text_confirmar_email_registro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Confirmar email"
+                    android:inputType="textEmailAddress"
+                    android:backgroundTint="@color/colorAccent"
+                    android:textColorHint="@color/colorAccent"
+                    android:textColor="@color/colorAccent"/>
+            </android.support.design.widget.TextInputLayout>
+
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />

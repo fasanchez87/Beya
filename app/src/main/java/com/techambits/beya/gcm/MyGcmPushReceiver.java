@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.techambits.beya.activities.AceptacionServicio;
 import com.techambits.beya.activities.Gestion;
+import com.techambits.beya.activities.SolitudServicioDetallada;
 import com.techambits.beya.sharedPreferences.gestionSharedPreferences;
 import com.google.android.gms.gcm.GcmListenerService;
 
@@ -44,6 +46,8 @@ public class MyGcmPushReceiver extends GcmListenerService
         String codigoCliente = bundle.getString("codigoCliente");//aqui esta el error
         String codigoSolicitud = bundle.getString("codigoSolicitud");//aqui esta el error
         String codigoEsteticista = bundle.getString("codigoEsteticista");//aqui esta el error
+        String indicaPush = bundle.getString("indicaPush");
+        String pushMessage = bundle.getString("pushMessage");
      /*   Log.e(TAG, "From: " + from);
         Log.e(TAG, "Title: " + title);
         Log.e(TAG, "message: " + message);
@@ -134,6 +138,12 @@ public class MyGcmPushReceiver extends GcmListenerService
                 // play notification sound
                 NotificationUtils notificationUtils = new NotificationUtils();
                 notificationUtils.playNotificationSound();
+
+                if(indicaPush.equals("SolicitudCancelada") && NotificationUtils.isAppIsInBackground(getApplicationContext()))
+                {
+                    Intent resultIntent = new Intent(getApplicationContext(), SolitudServicioDetallada.class);
+                    showNotificationMessage(getApplicationContext(), title, pushMessage, timestamp ,resultIntent);
+                }
             }
 
             else
@@ -141,12 +151,19 @@ public class MyGcmPushReceiver extends GcmListenerService
             if(pantallaMostrarPushAndroid.equals("pushNotificationLlegadaEsteticista"))
             {   //Creamos un intent receiver de modo que apenas llegue me lleve a la activity onMap para poder que se cierre el dialog de espera
                 //del cliente.
+
                 Intent pushNotifica = new Intent(Config.PUSH_NOTIFICATION_LLEGADA_ESTETICISTA);
                 pushNotifica.putExtra("codigoSolicitud", codigoSolicitud);
                 LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotifica);
                 // play notification sound
                 NotificationUtils notificationUtils = new NotificationUtils();
                 notificationUtils.playNotificationSound();
+
+                if(indicaPush.equals("NotificarLlegada") && NotificationUtils.isAppIsInBackground(getApplicationContext()))
+                {
+                    Intent resultIntent = new Intent(getApplicationContext(), SolitudServicioDetallada.class);
+                    showNotificationMessage(getApplicationContext(), title, pushMessage, timestamp ,resultIntent);
+                }
             }
 
             else
@@ -161,6 +178,15 @@ public class MyGcmPushReceiver extends GcmListenerService
                 // play notification sound
                 NotificationUtils notificationUtils = new NotificationUtils();
                 notificationUtils.playNotificationSound();
+
+                //Intent resultIntent = new Intent(getApplicationContext(), Gestion.class);
+                // check for push notification image attachment
+                if(indicaPush.equals("CancelarSolicitudEsteticista") && NotificationUtils.isAppIsInBackground(getApplicationContext()))
+                {
+                    Intent resultIntent = new Intent(getApplicationContext(), AceptacionServicio.class);
+                    showNotificationMessage(getApplicationContext(), title, message, timestamp ,resultIntent);
+                }
+
             }
 
             else
@@ -175,6 +201,12 @@ public class MyGcmPushReceiver extends GcmListenerService
                 // play notification sound
                 NotificationUtils notificationUtils = new NotificationUtils();
                 notificationUtils.playNotificationSound();
+
+                if(indicaPush.equals("CancelarServicioTarjeta") && NotificationUtils.isAppIsInBackground(getApplicationContext()))
+                {
+                    Intent resultIntent = new Intent(getApplicationContext(), SolitudServicioDetallada.class);
+                    showNotificationMessage(getApplicationContext(), title, pushMessage, timestamp ,resultIntent);
+                }
             }
 
             // the push notification is silent, may be other operations needed

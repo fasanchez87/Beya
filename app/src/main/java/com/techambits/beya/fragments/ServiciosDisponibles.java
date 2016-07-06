@@ -31,9 +31,6 @@ import android.widget.TextView;
 
 import com.techambits.beya.vars.vars;
 
-
-
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
@@ -52,7 +49,6 @@ import com.techambits.beya.beans.Servicio;
 import com.techambits.beya.beans.SolicitudServicio;
 import com.techambits.beya.decorators.DividerItemDecoration;
 import com.techambits.beya.sharedPreferences.gestionSharedPreferences;
-import com.techambits.beya.vars.vars;
 import com.techambits.beya.volley.ControllerSingleton;
 
 import org.json.JSONArray;
@@ -65,13 +61,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.techambits.beya.vars.vars;
-
-
-//import me.leolin.shortcutbadger.ShortcutBadger;
-
-//import me.leolin.shortcutbadger.ShortcutBadger;
 
 public class ServiciosDisponibles extends Fragment
 {
@@ -86,18 +75,13 @@ public class ServiciosDisponibles extends Fragment
     private ServiciosDisponiblesAdapter mAdapter;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
 
-
     public vars vars;
-
-
-
 
     private TextView textViewAvisoSinSolicitudesServicio;
 
     HashMap <String, ArrayList<Servicio>> hashTableSolicitudDetallada;
 
     private SwipeRefreshLayout refreshLayout;
-
 
     boolean active= false;
 
@@ -135,25 +119,14 @@ public class ServiciosDisponibles extends Fragment
             {
                 if (intent.getAction().equals(Config.PUSH_NOTIFICATION))
                 {
-                    // new push notification is received
-
-                    Log.w("ALERTA", "Push notification is received!" + intent.getStringExtra("message"));
-
-                    //data.addAll(datas);
-                    //notifyDataSetChanged();
-
-                   // progressBar.setVisibility(View.GONE);
                     textViewAvisoSinSolicitudesServicio.setVisibility(View.GONE);
                     recyclerViewServiciosDisponibles.setVisibility(View.VISIBLE);
                     _webServiceGetSolicitudesServicios();
                     mAdapter.notifyDataSetChanged();
-                    //ShortcutBadger.removeCount(ServiciosDisponibles.this.getActivity()); //for 1.1.4
                 }
             }
         };
-
     }
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
@@ -161,7 +134,6 @@ public class ServiciosDisponibles extends Fragment
         inflater.inflate(R.menu.menu_servicios_disponibles, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -172,14 +144,9 @@ public class ServiciosDisponibles extends Fragment
 
              if(sharedPreferences.getString("statusOnline").equals("1"))//SI ESTA ONLINE.
              {
-                 Log.d("UPDATES","UPDATE ONLINE");
-
-
-                     _webServiceGetSolicitudesServicios();
-                     mAdapter.notifyDataSetChanged();
-                     Log.d("UPDATES", "LLENAS");
-
-
+                 _webServiceGetSolicitudesServicios();
+                 mAdapter.notifyDataSetChanged();
+                 Log.d("UPDATES", "LLENAS");
              }
              else
              {
@@ -190,30 +157,22 @@ public class ServiciosDisponibles extends Fragment
 
              }
 
-
-
-
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
-
 
     @Override
     public void onPause()
     {
         //LocalBroadcastManager.getInstance(ServiciosDisponibles.this.getActivity()).unregisterReceiver(mRegistrationBroadcastReceiver);
         super.onPause();
-        Log.d("OJO", "ONPAUSE");
     }
 
     @Override
     public void onResume()
     {
         super.onResume();
-
 
         if(sharedPreferences.getString("statusOnline").equals("1"))
         {
@@ -228,24 +187,11 @@ public class ServiciosDisponibles extends Fragment
             recyclerViewServiciosDisponibles.setVisibility(View.GONE);
         }
 
-
-
-
-       /* // register GCM registration complete receiver
-        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter(Config.REGISTRATION_COMPLETE));*/
-        //ShortcutBadger.removeCount(ServiciosDisponibles.this.getActivity()); //for 1.1.4
-
-        Log.d("OJO", "ONRESUME");
-
-
         // register new push message receiver
         // by doing this, the activity will be notified each time a new message arrives
         LocalBroadcastManager.getInstance(ServiciosDisponibles.this.getActivity()).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(Config.PUSH_NOTIFICATION));
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -279,9 +225,11 @@ public class ServiciosDisponibles extends Fragment
         recyclerViewServiciosDisponibles.setAdapter(mAdapter);
 
         recyclerViewServiciosDisponibles.addOnItemTouchListener(new RecyclerTouchListener(this.getActivity(),
-                recyclerViewServiciosDisponibles, new ClickListener() {
+                recyclerViewServiciosDisponibles, new ClickListener()
+        {
             @Override
-            public void onClick(View view, int position) {
+            public void onClick(View view, int position)
+            {
                 SolicitudServicio solicitudServicio = solicitudesServicios.get(position);
 
                 Intent intent = new Intent(ServiciosDisponibles.this.getActivity(), SolitudServicioDetallada.class);

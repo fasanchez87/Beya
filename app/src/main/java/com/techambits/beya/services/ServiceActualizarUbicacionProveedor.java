@@ -157,12 +157,7 @@ public class ServiceActualizarUbicacionProveedor extends Service implements Loca
             {
                 _webServiceUpdatePositionProvider( ( mLatitude + ":" + mLongitude ) ,
                         sharedPreferences.getString("serialUsuario") , sharedPreferences.getString("statusOnline"));
-
-                Log.i("POSITIONX", "" + mLatitude + " : " + mLongitude);
-                Log.i("POSITIONX", "" + sharedPreferences.getString("serialUsuario"));
-                Log.i("POSITIONX", "" + sharedPreferences.getString("statusOnline"));
-                Log.i("POSITIONX", "" + sharedPreferences.getString("TOKEN"));
-                Log.i("POSITIONX", "" + sharedPreferences.getString("MyToken"));
+                Log.d("LOCATION",mLatitude + ":" + mLongitude);
 
             }
             else

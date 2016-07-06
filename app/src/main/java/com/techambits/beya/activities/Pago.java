@@ -26,6 +26,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
@@ -50,7 +51,6 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-
 
 
 public class Pago extends AppCompatActivity
@@ -125,56 +125,9 @@ public class Pago extends AppCompatActivity
 
         vars = new vars();
 
-
-
-//        mRegistrationBroadcastReceiver = new BroadcastReceiver()
-//        {
-//            @Override
-//            public void onReceive(Context context, Intent intent)
-//            {
-//
-//                // checking for type intent filter
-//                if (intent.getAction().equals(Config.REGISTRATION_COMPLETE))
-//                {
-//                    // gcm successfully registered
-//                    // now subscribe to `global` topic to receive app wide notifications
-//                    tokenGCM = intent.getStringExtra("token");
-//                    sharedPreferences.putString("TOKEN :: ",tokenGCM);
-//
-//                    Toast.makeText(getApplicationContext(), "GCM registration token: " + tokenGCM, Toast.LENGTH_LONG).show();
-//
-//                }
-//
-//                else if (intent.getAction().equals(Config.SENT_TOKEN_TO_SERVER))
-//                {
-//                    // gcm registration id is stored in our server's MySQL
-//
-//                    Toast.makeText(getApplicationContext(), "GCM registration token is stored in server!", Toast.LENGTH_LONG).show();
-//
-//                }
-//
-//                else if (intent.getAction().equals(Config.PUSH_NOTIFICATION))
-//                {
-//                    // new push notification is received
-//
-//                    Toast.makeText(getApplicationContext(), "Push notification is received!", Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        };
-
-
-
-//        if (checkPlayServices()) {
-//            registerGCM();
-//        }
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-
-
-
-       // registro = new Registro();
-
 
         EditTextNameUser = (EditText) findViewById(R.id.edit_text_nombre_registro);
         EditTextApellidoUser = (EditText) findViewById(R.id.edit_text_apellido_registro);
@@ -200,7 +153,11 @@ public class Pago extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                displayAlertDialogTerminos();
+                if(validarDatosPago())
+                {
+                    displayAlertDialogTerminos();
+                }
+
             }
         });
 
@@ -233,29 +190,6 @@ public class Pago extends AppCompatActivity
 
     }
 
-//    private boolean checkPlayServices() {
-//        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
-//        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
-//        if (resultCode != ConnectionResult.SUCCESS) {
-//            if (apiAvailability.isUserResolvableError(resultCode)) {
-//                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
-//                        .show();
-//            } else {
-//                Log.i(TAG, "This device is not supported. Google Play Services not installed!");
-//                Toast.makeText(getApplicationContext(), "This device is not supported. Google Play Services not installed!", Toast.LENGTH_LONG).show();
-//                finish();
-//            }
-//            return false;
-//        }
-//        return true;
-//    }
-
-//    // starting the service to register with GCM
-//    private void registerGCM() {
-//        Intent intent = new Intent(this, GcmIntentService.class);
-//        intent.putExtra("key", "register");
-//        startService(intent);
-//    }
 
 
     public void displayAlertDialogTerminos()
@@ -402,7 +336,7 @@ public class Pago extends AppCompatActivity
 
         if (EditTextNumeroTarjetaCreditoUser.getText().toString().trim().isEmpty())
         {
-            textInputLayoutNumeroTarjetaCreditoUser.setError("Número de tarjeta invalido");
+            EditTextNumeroTarjetaCreditoUser.setError("Número de tarjeta invalido");
             requestFocus(EditTextNumeroTarjetaCreditoUser);
             return false;
         }
@@ -424,7 +358,7 @@ public class Pago extends AppCompatActivity
 
         if (EditTextAñoTarjetaCreditoUser.getText().toString().trim().isEmpty())
         {
-            textInputLayoutAñoTarjetaCreditoUser.setError("Año no valido");
+            EditTextAñoTarjetaCreditoUser.setError("Año no valido");
             requestFocus(EditTextAñoTarjetaCreditoUser);
             return false;
         }
@@ -433,7 +367,7 @@ public class Pago extends AppCompatActivity
 
         if (EditTextAñoTarjetaCreditoUser.getText().toString().trim().length() < 4)
         {
-            textInputLayoutAñoTarjetaCreditoUser.setError("Año no valido");
+            EditTextAñoTarjetaCreditoUser.setError("Año no valido");
             requestFocus(EditTextAñoTarjetaCreditoUser);
             return false;
         }
@@ -455,7 +389,7 @@ public class Pago extends AppCompatActivity
         if ((EditTextMesTarjetaCreditoUser.getText().toString().trim().isEmpty()) ||
                 (Integer.parseInt(mesCard.toString()) >= 13 )  )
         {
-            textInputLayoutMesTarjetaCreditoUser.setError("Mes no valido");
+            EditTextMesTarjetaCreditoUser.setError("Mes no valido");
             requestFocus(EditTextMesTarjetaCreditoUser);
             return false;
         }
@@ -484,7 +418,7 @@ public class Pago extends AppCompatActivity
 
         if (EditTextCVVTarjetaCreditoUser.getText().toString().trim().isEmpty())
         {
-            textInputLayoutCVVTarjetaCreditoUser.setError("Código de seguridad invalido");
+            EditTextCVVTarjetaCreditoUser.setError("Código de seguridad invalido");
             requestFocus(EditTextCVVTarjetaCreditoUser);
             return false;
         }
@@ -592,7 +526,7 @@ public class Pago extends AppCompatActivity
         if (!validateCardNumber(numberCard) )
         {
             textInputLayoutNumeroTarjetaCreditoUser.setHintAnimationEnabled(true);
-            textInputLayoutNumeroTarjetaCreditoUser.setError("Número de tarjeta invalido");
+            EditTextNumeroTarjetaCreditoUser.setError("Número de tarjeta invalido");
             requestFocus(EditTextNumeroTarjetaCreditoUser);
             return false;
         }
@@ -891,7 +825,7 @@ public class Pago extends AppCompatActivity
                                                 finish();
                                                 sharedPreferences.clear();
                                             }
-                                        }).show();
+                                        }).setCancelable(false).show();
 
                             }
 
@@ -913,7 +847,7 @@ public class Pago extends AppCompatActivity
                                                 startActivity(intent);
                                                 finish();
                                             }
-                                        }).show();
+                                        }).setCancelable(false).show();
 
                             }
 
@@ -1204,6 +1138,8 @@ public class Pago extends AppCompatActivity
 
        // jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(10000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         ControllerSingleton.getInstance().addToReqQueue(jsonObjReq, "");
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(20000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
 
     }
 }
