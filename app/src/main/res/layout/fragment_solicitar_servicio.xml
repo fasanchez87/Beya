@@ -21,37 +21,125 @@
     <LinearLayout
         android:id="@+id/linearLayoutPrecioTotalSolicitarServicioToMap"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible"
         android:background="@color/colorAccent"
-        android:gravity="center"
         >
+
+        <LinearLayout
+            android:id="@+id/linearLayoutSubtotalesTotalesServicios"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            >
 
         <TextView
             android:id="@+id/nombreCliedfsdfnteAceptacionServicio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dip"
             android:textStyle="bold"
-            android:text="TOTAL:"
-            android:gravity="center"
+            android:text="SUBTOTAL:"
+            android:paddingLeft="10dp"
+            android:layout_weight="1"
             android:textColor="#ffffff"
-            android:padding="5dp"
+            android:textSize="20sp"
             android:layout_gravity="center_vertical" />
 
         <TextView
             android:id="@+id/valorTotalServiciosSeleccionadosSolicitarServicios"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dip"
-            android:gravity="center"
             android:paddingLeft="3dp"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:layout_marginRight="10dp"
             android:textStyle="bold"
-            android:text="0"
+            android:text="$0"
+            android:gravity="right"
             android:textColor="#ffffff"
             android:layout_gravity="center_vertical" />
+            </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutBonoDisponible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/textViewTotalBono"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="BONO:"
+                android:paddingLeft="10dp"
+                android:textSize="20sp"
+                android:paddingRight="10dp"
+                android:layout_weight="1"
+                android:textColor="@color/colorBlanco"
+                android:layout_gravity="center_vertical" />
+
+            <TextView
+                android:id="@+id/textViewValorBono"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="3dp"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:layout_marginRight="10dp"
+                android:text="$0"
+                android:textColor="@color/colorBlanco"
+                android:gravity="right"
+                android:textSize="20sp"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutGranTotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/textViewTotaxxlServiciosSeleccionados"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="TOTAL:"
+                android:paddingLeft="10dp"
+                android:textSize="20sp"
+                android:paddingRight="10dp"
+                android:layout_weight="1"
+                android:textColor="@color/colorBlanco"
+                android:layout_gravity="center_vertical" />
+
+            <TextView
+                android:id="@+id/textViewTotalServiciosSeleccionados"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="3dp"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:layout_marginRight="10dp"
+                android:text="$0"
+                android:textColor="@color/colorBlanco"
+                android:gravity="right"
+                android:textSize="20sp"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
     </LinearLayout>
+
+
+
+
+
+
+
+
 
     <!-- <Button
          android:layout_width="match_parent"

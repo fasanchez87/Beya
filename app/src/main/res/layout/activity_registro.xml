@@ -152,7 +152,7 @@
                     android:id="@+id/edit_text_documento_registro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Número documento"
+                    android:hint="N° de Identificación"
                     android:inputType="number"
                     android:backgroundTint="@color/colorAccent"
                     android:textColorHint="@color/colorAccent"

@@ -553,9 +553,6 @@ public class Login extends AppCompatActivity implements LocationListener,OnMapRe
                             if(status.equals("ok"))
                                 {
 
-
-
-
                                     String nombre = response.getString("nombresUsuario");
                                     String apellidos = response.getString("apellidosUsuario");
                                     String nombreUsuario = (nombre+" "+apellidos);

@@ -326,7 +326,7 @@ public class Gestion extends AppCompatActivity
         boolean haveConnectedMobile =  false ;
 
         ConnectivityManager cm =  (ConnectivityManager) getSystemService ( Context . CONNECTIVITY_SERVICE );
-        NetworkInfo [] netInfo = cm . getAllNetworkInfo ();
+        NetworkInfo [] netInfo = cm . getAllNetworkInfo();
         for  ( NetworkInfo ni : netInfo )
         {
             if  ( ni . getTypeName (). equalsIgnoreCase ( "WIFI" ))
@@ -592,9 +592,6 @@ public class Gestion extends AppCompatActivity
                 new IntentFilter(Config.PUSH_NOTIFICATION));
     }
 
-
-
-
     private void _webServiceCerrarSesionChangeStateOnLine(final String serialUsuario)
     {
 
@@ -842,8 +839,9 @@ public class Gestion extends AppCompatActivity
 
         };
 
-        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(10000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         ControllerSingleton.getInstance().addToReqQueue(jsonObjReq, "");
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(20000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
 
     }
 
@@ -864,17 +862,17 @@ public class Gestion extends AppCompatActivity
 
                             if(status)
                             {
-                                Log.w("CERRAR", ""+message);
+                                Log.w("CERRAR", "" + message);
                             }
                             else
                             {
-                                Log.w("CERRAR", ""+message);
+                                Log.w("CERRAR", "" + message);
 
                             }
                         }
                         catch (JSONException e)
                         {
-                            Log.w("CERRAR", ""+e.getMessage().toString());
+                            Log.w("CERRAR", "" + e.getMessage().toString());
                             e.printStackTrace();
                         }
                     }
@@ -904,6 +902,8 @@ public class Gestion extends AppCompatActivity
         };
 
         ControllerSingleton.getInstance().addToReqQueue(jsonObjReq, "");
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(20000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
     }
 
 

@@ -37,6 +37,7 @@ public class ServiciosAdapter extends RecyclerView.Adapter <ServiciosAdapter.MyV
 
 
     public static int valorTotal = 0;
+    public static int valorTotalSinBono = 0;
 
     ImageLoader imageLoader = ControllerSingleton.getInstance().getImageLoader();
 
@@ -48,6 +49,8 @@ public class ServiciosAdapter extends RecyclerView.Adapter <ServiciosAdapter.MyV
         public TextView idServicio,nombreServicio, descripcionServicio, valorServicio;
         public CheckBox checkServicio;
         public NetworkImageView imagenServicio;
+
+
 
         public MyViewHolder(View view)
         {
@@ -119,7 +122,6 @@ public class ServiciosAdapter extends RecyclerView.Adapter <ServiciosAdapter.MyV
         holder.checkServicio.setChecked(servicio.isSelected());
         holder.checkServicio.setTag(servicio);
 
-
         holder.checkServicio.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
@@ -136,10 +138,13 @@ public class ServiciosAdapter extends RecyclerView.Adapter <ServiciosAdapter.MyV
               /*  Toast.makeText(v.getContext(), "Clicked on Checkbox: " + cb.getText() + " is "+ cb.isChecked(), Toast.LENGTH_LONG).show();
                 Toast.makeText(v.getContext(), "Clicked on : " + s.getValorServicio(), Toast.LENGTH_LONG).show();*/
 
+
+
                 if(cb.isChecked())
                 {
                     //sumo si selecciona servicios
                     valorTotal = valorTotal+(Integer.parseInt(s.getValorServicio()));
+                    valorTotalSinBono = valorTotalSinBono+(Integer.parseInt(s.getValorServicio()));
                     //Toast.makeText(v.getContext(), ""+valorTotal, Toast.LENGTH_LONG).show();
                     runOnUiThread(new Runnable()
                     {
@@ -148,9 +153,8 @@ public class ServiciosAdapter extends RecyclerView.Adapter <ServiciosAdapter.MyV
                         {
 
                             //SolicitarServicio.valorTotalTextView.setText("" +(valorTotal));
-                            SolicitarServicio.valorTotalTextView.setText("$" + nf.format(valorTotal));
-
-
+                            SolicitarServicio.valorTotalTextView.setText("$" + nf.format(valorTotalSinBono));
+                            SolicitarServicio.textViewValorTotalFinal.setText("$" + nf.format(valorTotal));
 
                         }
                     });
@@ -162,6 +166,7 @@ public class ServiciosAdapter extends RecyclerView.Adapter <ServiciosAdapter.MyV
                 {
                     //resto si lo quita
                     valorTotal = valorTotal-(Integer.parseInt(s.getValorServicio()));
+                    valorTotalSinBono = valorTotalSinBono-(Integer.parseInt(s.getValorServicio()));
                    // holder.valorTotalTextView.setText(""+valorTotal);
                     //Toast.makeText(v.getContext(), ""+valorTotal, Toast.LENGTH_LONG).show();
 
@@ -171,7 +176,9 @@ public class ServiciosAdapter extends RecyclerView.Adapter <ServiciosAdapter.MyV
                         public void run() {
 
                             //SolicitarServicio.valorTotalTextView.setText("" + (valorTotal));
-                            SolicitarServicio.valorTotalTextView.setText("$" + nf.format(valorTotal));
+                            SolicitarServicio.valorTotalTextView.setText("$" + nf.format(valorTotalSinBono));
+                            SolicitarServicio.textViewValorTotalFinal.setText("$" + nf.format(valorTotal));
+
 
                         }
                     });

@@ -797,18 +797,18 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
         {
             case R.id.radioButtonDiezMinutos:
                 if (checked)
-                    tiempoLlegada = "10";
+                    tiempoLlegada = "30";
                     break;
             case R.id.radioButtonTreintaMinutos:
                 if (checked)
-                    tiempoLlegada = "30";
+                    tiempoLlegada = "60";
                     break;
             case R.id.radioButtonCincuentaMinutos:
                 if (checked)
-                    tiempoLlegada = "50";
+                    tiempoLlegada = "120";
                     break;
             default:
-                    tiempoLlegada = "10";
+                    tiempoLlegada = "30";
         }
     }
 
@@ -1254,7 +1254,7 @@ public class SolitudServicioDetallada extends AppCompatActivity implements Locat
 
         if(tiempoLlegada.toString().isEmpty())//POR DEFECTO 10 MIN.
         {
-            tiempoLlegada = "10";
+            tiempoLlegada = "30";
         }
 
         Log.w("ESTETICISTA","serialUsuarioEsteticista"+sharedPreferences.getString("serialUsuario"));

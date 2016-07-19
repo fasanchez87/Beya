@@ -28,21 +28,21 @@
         android:id="@+id/radioButtonDiezMinutos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="10 Minutos"
+        android:text="30 Minutos"
         android:onClick="onRadioButtonClicked"/>
 
     <RadioButton
         android:id="@+id/radioButtonTreintaMinutos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="30 Minutos"
+        android:text="60 Minutos"
         android:onClick="onRadioButtonClicked"/>
 
     <RadioButton
         android:id="@+id/radioButtonCincuentaMinutos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="50 Minutos"
+        android:text="120 Minutos"
         android:onClick="onRadioButtonClicked"/>
     </RadioGroup>
 

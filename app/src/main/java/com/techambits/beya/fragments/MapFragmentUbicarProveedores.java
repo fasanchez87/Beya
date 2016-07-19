@@ -3,12 +3,16 @@ package com.techambits.beya.fragments;
 import android.Manifest;
 import android.app.AlertDialog;
 
+import com.techambits.beya.activities.Gestion;
+import com.techambits.beya.activities.SolitudServicioDetallada;
 import com.techambits.beya.app.Config;
 import com.techambits.beya.beans.Servicio;
+import com.techambits.beya.gcm.NotificationUtils;
 import com.techambits.beya.services.HeartBeatServiceGCM;
 import com.techambits.beya.services.ServiceObtenerUbicacionEsteticista;
 import com.techambits.beya.vars.vars;
 
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -101,6 +105,9 @@ public class MapFragmentUbicarProveedores extends Fragment implements LocationLi
     private Marker marker;
     private MarkerOptions markerOptions;
 
+    private NotificationUtils notificationUtils;
+
+
     private static final long INTERVAL = 1000 * 5;
     private static final long FASTEST_INTERVAL = 1000 * 1;
     Button btnFusedLocation;
@@ -108,6 +115,8 @@ public class MapFragmentUbicarProveedores extends Fragment implements LocationLi
 
     Location mCurrentLocation;
     String mLastUpdateTime;
+
+    SolicitarServicio solicitarServicio;
 
 
     private String TAG = MapFragmentUbicarProveedores.class.getSimpleName();
@@ -119,7 +128,7 @@ public class MapFragmentUbicarProveedores extends Fragment implements LocationLi
 
 
     private Timer mTimer = null;
-    public static final long TIEMPO_LIMITE = 420 * 1000; // 7 minute
+    public static final long TIEMPO_LIMITE = 300 * 1000; // 7 minute
     public static final long TIEMPO_INICIO = 1 * 1000; // 1 seconds
     private Handler mHandler = new Handler();
 
@@ -192,7 +201,7 @@ public class MapFragmentUbicarProveedores extends Fragment implements LocationLi
 
 
         //getActivity().startService(new Intent(getActivity(), HeartBeatServiceGCM.class));
-
+        solicitarServicio = new SolicitarServicio();
 
         sharedPreferences = new gestionSharedPreferences(this.getActivity());
         vars = new vars();
@@ -420,7 +429,9 @@ public class MapFragmentUbicarProveedores extends Fragment implements LocationLi
         final EditText editTextDireccionDomicilio = (EditText) alertLayout.findViewById(R.id.edit_text_direccion_domicilio);
 
         editTextDireccionDomicilio.setText(sharedPreferences.getString("direccionDomicilio").toString());
-        Log.d("DIRECCION",""+sharedPreferences.getString("direccionDomicilio").toString());
+        Log.d("DIRECCION", "" + sharedPreferences.getString("direccionDomicilio").toString());
+        Log.i("PILOSO_MAP",""+ sharedPreferences.getString("valorTotalServiciosTemporalSolicitarServicio"));
+
 
         final Button botonConfirmarDomicilio = (Button) alertLayout.findViewById(R.id.btn_confirmar_domiclio);
         final Button btn_cancelar_domiclio = (Button) alertLayout.findViewById(R.id.btn_cancelar_domiclio);
@@ -446,6 +457,7 @@ public class MapFragmentUbicarProveedores extends Fragment implements LocationLi
 
                 else
                 {
+
 
                     _webServiceEnviarNotificacionPushATodos(sharedPreferences.getString("serialUsuario"));
                     sharedPreferences.putString("direccionDomicilio", editTextDireccionDomicilio.getText().toString());
@@ -555,6 +567,9 @@ public class MapFragmentUbicarProveedores extends Fragment implements LocationLi
         // by doing this, the activity will be notified each time a new message arrives
         LocalBroadcastManager.getInstance(MapFragmentUbicarProveedores.this.getActivity()).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(Config.PUSH_NOTIFICATION_PANTALLA));
+
+        NotificationManager nm = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.cancelAll();
 
 
     }
@@ -769,16 +784,22 @@ public class MapFragmentUbicarProveedores extends Fragment implements LocationLi
 
     }
 
+    private void showNotificationMessage(Context context, String title, String message, String timeStamp, Intent intent)
+    {
+        notificationUtils = new NotificationUtils(context);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        notificationUtils.showNotificationMessage(title, message, timeStamp, intent);
+    }
+
     private void _webServiceEnviarNotificacionPushATodos( final String serialUsuario )
     {
 
         _urlWebService = vars.ipServer.concat("/ws/SendPushNotificationForALL");
 
-
-
         Log.e(TAG, "Se escojieron: "+""+sharedPreferences.getString("serviciosEscogidos"));
         Log.e(TAG, "PRUEBA LATITUD " +""+sharedPreferences.getDouble("latitudCliente", 0));
         Log.e(TAG, "PRUEBA LONGITUD " +""+sharedPreferences.getDouble("longitudCliente", 0));
+        Log.e(TAG, "indicabono_1" +""+solicitarServicio.getIndicaBono());
 
 
         indicaAndroid = vars.indicaAndroid;
@@ -797,6 +818,9 @@ public class MapFragmentUbicarProveedores extends Fragment implements LocationLi
 
                             if(status)
                             {
+
+                                //solicitarServicio.setIndicaBono("0");
+
                                 displayAlertDialogEsperaEsteticistas();
 
                               /*  progressDialog = ProgressDialog.show(MapFragmentUbicarProveedores.this.getActivity(),
@@ -828,6 +852,18 @@ public class MapFragmentUbicarProveedores extends Fragment implements LocationLi
                                         alertDialogEsperaEsteticista.dismiss();
 
                                        //progressDialog.dismiss();
+
+
+                                        if(NotificationUtils.isAppIsInBackground(getActivity()))
+                                        {
+                                            Intent resultIntent = new Intent(getActivity(), Gestion.class);
+                                            showNotificationMessage(getActivity(), "Solicitud de servicio",
+                                                    "En este momento no se encuentran esteticistas disponibles",
+                                                    "" ,resultIntent);
+                                        }
+
+
+
 
                                         alertDialogBuilder = new AlertDialog.Builder(
                                                 getActivity());
@@ -1080,6 +1116,7 @@ public class MapFragmentUbicarProveedores extends Fragment implements LocationLi
                 headers.put("direccionDomicilio", sharedPreferences.getString("direccionDomicilio"));
                 headers.put("valorTotalServiciosTemporalSolicitarServicio", sharedPreferences.getString("valorTotalServiciosTemporalSolicitarServicio"));
                 headers.put("tokenGCM", sharedPreferences.getString("TOKEN"));
+                headers.put("indicaBono", "" + solicitarServicio.getIndicaBono());
                 headers.put("MyToken", sharedPreferences.getString("MyToken"));
                 return headers;
 

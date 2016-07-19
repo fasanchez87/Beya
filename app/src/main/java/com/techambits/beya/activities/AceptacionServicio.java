@@ -911,6 +911,8 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
             if(ValorServicio.getValorServicio() > 0)
             {
                 sharedPreferences.putInt("valorServicio", ValorServicio.getValorServicio());
+                Log.i("PILOSO_ACEPTACION", "" + sharedPreferences.getInt("valorServicio"));
+
             }
 
             precioTemporalAceptacionServicios.setText("$"+nf.format(sharedPreferences.getInt("valorServicio")));
@@ -1062,7 +1064,6 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
                 valorTotalDescuentoBono = ((sharedPreferences.getInt("valorServicio")) -
                         (sharedPreferences.getInt("valorBono")
                 ));
-
 
                 sharedPreferences.putString("valorTotalDescuentoBono","$"+nf.format(valorTotalDescuentoBono));
 
@@ -1359,6 +1360,8 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
         };
 
         ControllerSingleton.getInstance().addToReqQueue(jsonObjReq, "");
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(20000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
 
     }
 
@@ -1582,6 +1585,8 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
         };
 
         ControllerSingleton.getInstance().addToReqQueue(jsonObjReq, "");
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(20000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
 
     }
 

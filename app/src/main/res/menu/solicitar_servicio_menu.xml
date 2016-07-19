@@ -3,7 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
 
-
+    <item android:id="@+id/action_aceptar_bono_solicitud"
+        android:title="Aplicar Bono"
+        android:icon="@drawable/ic_markunread_white_24dp"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom"
+        android:visible="false"/>
     <item
         android:id="@+id/action_buscar_esteticista_on_map"
         android:icon="@drawable/ic_room_white_24dp"

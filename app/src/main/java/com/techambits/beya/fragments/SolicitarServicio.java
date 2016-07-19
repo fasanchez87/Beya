@@ -40,6 +40,7 @@ import com.techambits.beya.R;
 import com.techambits.beya.adapters.ServiciosAdapter;
 import com.techambits.beya.beans.Proveedor;
 import com.techambits.beya.beans.Servicio;
+import com.techambits.beya.beans.ValorServicio;
 import com.techambits.beya.decorators.DividerItemDecoration;
 import com.techambits.beya.sharedPreferences.gestionSharedPreferences;
 import com.techambits.beya.volley.ControllerSingleton;
@@ -69,7 +70,15 @@ public class SolicitarServicio extends Fragment
 
     public vars vars;
 
+    private boolean showMenuBono = false;
+    private String codigoBono;
+    private int valorBono = 0;
+    private String fechaSolicitud;
+    private boolean aplicoBono;
 
+    public static String indicaBono;
+
+    private MenuItem menuAceptarBono;
 
     public static TextView valorTotalTextView;
 
@@ -97,9 +106,13 @@ public class SolicitarServicio extends Fragment
     private ArrayList<Servicio> serviciosSeleccionadosList;
     private ArrayList<Proveedor> provedoresList;
     private LinearLayout linearLayoutPrecioTotal;
+    private LinearLayout linearLayoutBono;
+    private LinearLayout linearLayoutGranTotal;
 
     private RecyclerView recyclerView;
     private ServiciosAdapter mAdapter;
+
+    public static TextView textViewValorBono, textViewValorTotalFinal;
 
    // private Button buttonSeleccionarServicios;
 
@@ -124,7 +137,6 @@ public class SolicitarServicio extends Fragment
 
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-
         sharedPreferences = new gestionSharedPreferences(this.getActivity());
         provedoresList = new ArrayList<Proveedor>();
         serviciosSeleccionadosList = new ArrayList<Servicio>();
@@ -132,32 +144,30 @@ public class SolicitarServicio extends Fragment
 
         vars = new vars();
 
+        aplicoBono = false;
 
+        indicaBono = "0";
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
-
-
         setHasOptionsMenu(true);
-
         return inflater.inflate(R.layout.fragment_solicitar_servicio, container, false);
     }
 
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState)
+    {
         super.onViewCreated(view, savedInstanceState);
-
 
         valorTotalTextView = (TextView) this.getActivity().findViewById(R.id.valorTotalServiciosSeleccionadosSolicitarServicios);
 
-
         linearLayoutPrecioTotal = (LinearLayout) getActivity().findViewById(R.id.linearLayoutPrecioTotalSolicitarServicioToMap);
-
 
         recyclerView = (RecyclerView) this.getActivity().findViewById(R.id.recycler_view);
 
@@ -165,6 +175,12 @@ public class SolicitarServicio extends Fragment
         //buttonSeleccionarServicios = (Button) this.getActivity().findViewById(R.id.buttonSeleccionarServicioFragmentSolicitarServicio);
 
         checkBoxServicio = (CheckBox) this.getActivity().findViewById(R.id.checkBoxServicio);
+
+        textViewValorBono = (TextView) getActivity().findViewById(R.id.textViewValorBono);
+        linearLayoutGranTotal = (LinearLayout) getActivity().findViewById(R.id.linearLayoutGranTotal);
+        textViewValorTotalFinal = (TextView) getActivity().findViewById(R.id.textViewTotalServiciosSeleccionados);
+        linearLayoutBono = (LinearLayout) getActivity().findViewById(R.id.linearLayoutBonoDisponible);
+
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity().getApplicationContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -206,14 +222,33 @@ public class SolicitarServicio extends Fragment
         mAdapter.notifyDataSetChanged();
 
     }
+    public String getIndicaBono()
+    {
+        return indicaBono;
+    }
+
+    public void setIndicaBono(String indicaBono)
+    {
+        this.indicaBono = indicaBono;
+    }
+
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu)
+    {
+        menuAceptarBono.setVisible(showMenuBono);
+        super.onPrepareOptionsMenu(menu);
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         // Inflate the menu; this adds items to the action bar if it is present.
         inflater.inflate(R.menu.solicitar_servicio_menu, menu);
+        menuAceptarBono = (MenuItem) menu.findItem(R.id.action_aceptar_bono_solicitud);
+
         /*SolicitarServicio.this.getActivity().getMenuInflater().inflate(R.menu.solicitar_servicio_menu, menu);*/
-        super.onCreateOptionsMenu(menu,inflater);
+        super.onCreateOptionsMenu(menu, inflater);
 
     }
 
@@ -229,7 +264,9 @@ public class SolicitarServicio extends Fragment
                 String data = "";
                 String serviciosEscogidosParaPush = "";
 
-                sharedPreferences.putString("valorTotalServiciosTemporalSolicitarServicio",valorTotalTextView.getText().toString());
+                Log.i("PILOSO",""+textViewValorTotalFinal.getText().toString());
+                sharedPreferences.putString("valorTotalServiciosTemporalSolicitarServicio", textViewValorTotalFinal.getText().toString());
+                Log.i("PILOSO", "" + sharedPreferences.getString("valorTotalServiciosTemporalSolicitarServicio"));
 
                 List<Servicio> lista_servicios = ((ServiciosAdapter) mAdapter).getServiciosList();
 
@@ -255,17 +292,39 @@ public class SolicitarServicio extends Fragment
 
                 if(data.isEmpty())
                 {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(SolicitarServicio.this.getActivity());
-                    builder
-                            .setMessage("Debe seleccionar al menos (1) Servicio.")
-                            .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int id) {
-                                    //Intent intent = new Intent(Pago.this.getApplicationContext(), Registro.class);
-                                    //startActivity(intent);
-                                    //finish();
-                                }
-                            }).show();
+                    if(!aplicoBono)
+                    {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(SolicitarServicio.this.getActivity());
+                        builder
+                                .setMessage("Debe seleccionar al menos (1) Servicio.")
+                                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        //Intent intent = new Intent(Pago.this.getApplicationContext(), Registro.class);
+                                        //startActivity(intent);
+                                        //finish();
+                                    }
+                                }).setCancelable(false).show();
+                    }
+
+                    if(aplicoBono)
+                    {
+                       if(ServiciosAdapter.valorTotal<10000)
+                       {
+                           AlertDialog.Builder builder = new AlertDialog.Builder(SolicitarServicio.this.getActivity());
+                           builder
+                                   .setMessage("El servicio debe ser mayor a $10.000 para poder efectuarse la solicitud.")
+                                   .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                       @Override
+                                       public void onClick(DialogInterface dialog, int id) {
+                                           //Intent intent = new Intent(Pago.this.getApplicationContext(), Registro.class);
+                                           //startActivity(intent);
+                                           //finish();
+                                       }
+                                   }).setCancelable(false).show();
+                       }
+
+                    }
                 }
 
                 else
@@ -287,14 +346,154 @@ public class SolicitarServicio extends Fragment
 
                 }
 
+                return true;
+
+
+            case R.id.action_aceptar_bono_solicitud:
+
+                String datass = "";
+                String serviciosEscogidosParaPushs = "";
+
+                List<Servicio> lista_servicioss = ((ServiciosAdapter) mAdapter).getServiciosList();
+
+                for (int i = 0; i < lista_servicioss.size(); i++)
+                {
+                    Servicio servicio = lista_servicioss.get(i);
+
+                    if (servicio.isSelected() == true)
+                    {
+                        datass = datass+servicio.getId().toString()+",";
+
+                      /*  Servicio serviciosSeleccionados = new Servicio();
+
+                        serviciosSeleccionados.setImagen( servicio.getImagen());
+                        serviciosSeleccionados.setId( servicio.getId() );
+                        serviciosSeleccionados.setNombreServicio(servicio.getNombreServicio());
+                        serviciosSeleccionados.setDescripcionServicio(servicio.getDescripcionServicio());
+                        serviciosSeleccionados.setValorServicio(servicio.getValorServicio().toString());
+                        serviciosSeleccionadosList.add(serviciosSeleccionados);*/
+
+                    }
+                }
+
+                if(datass.isEmpty())
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SolicitarServicio.this.getActivity());
+                    builder.setTitle("REDIMIR BONO")
+                            .setMessage("Para redimir el bono, debe seleccionar al menos (1) Servicio.")
+                            .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id)
+                                {
+                                    //Intent intent = new Intent(Pago.this.getApplicationContext(), Registro.class);
+                                    //startActivity(intent);
+                                    //finish();
+                                }
+                            }).setCancelable(false).show();
+                }
+
+                else
+                {
+
+
+                    AlertDialog.Builder builder3 = new AlertDialog.Builder(getActivity());
+                    builder3.setTitle("REDIMIR BONO")
+                            .setMessage("¿Esta seguro de redimir bono por valor de: $" + nf.format(valorBono)
+                            + " ?; Si no desea aplicarlo por ahora, puede aplicarlo para la proxima solicitud de servicio.")
+                            .setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener()
+                            {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id)
+                                {
+
+                                    setIndicaBono("1");
+                                    Log.i("indicabonoSEACEPTOBONO",""+getIndicaBono());
+                                    menuAceptarBono.setVisible(false);
+                                    linearLayoutBono.setVisibility(View.VISIBLE);
+                                    linearLayoutGranTotal.setVisibility(View.VISIBLE);
+                                    textViewValorBono.setText("$" + nf.format(valorBono));
+
+                                    SolicitarServicio.valorTotalTextView.setText("$" + nf.format(ServiciosAdapter.valorTotalSinBono));
+                                    ServiciosAdapter.valorTotal = ((ServiciosAdapter.valorTotal) - (valorBono));
+                                    SolicitarServicio.textViewValorTotalFinal.setText("$" + nf.format(ServiciosAdapter.valorTotal));
+                                    ValorServicio.setValorServicio(ServiciosAdapter.valorTotal);
+
+                                    aplicoBono = true;
+                                   /* _webServiceRedimirBono(codigoCliente, sharedPreferences.getString("codigoBono")
+                                            , codigoSolicitud);*/
+
+                                    //_webServiceRedimirBono(sharedPreferences.getString("serialUsuario"),codigoBono);
+                                }
+                            }).setNegativeButton("APLAZAR", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id)
+                        {
+
+                            //valorBono = 0;
+                            //menuAceptarBono.setVisible(false);
+                            //setIndicaBono("0");
+                            Log.i("indicabonoSECANCELOBONO", "" + getIndicaBono());
+
+
+                        }
+                    }).setCancelable(false).show();
+
+
+
+
+
+                    /*//BORRAR ULTIMA COMA Y SEPARARLOS POR DOS PUNTOS ':'
+                    String serviciosEscogidos = datass.substring(0, datass.lastIndexOf(","));
+                    sharedPreferences.putString("serviciosEscogidos", serviciosEscogidos);
+                    sharedPreferences.putString("serviciosEscogidosEnSolicitarServicio", serviciosEscogidos);
+
+                  *//*  Toast.makeText(SolicitarServicio.this.getActivity(),
+                            "Selected Services: \n" + serviciosEscogidos+" "+sharedPreferences.getString("valorTotalServicios"), Toast.LENGTH_LONG)
+                            .show();*//*
+
+
+
+                    sharedPreferences.putInt("valorTotalServiciosAdapter", ServiciosAdapter.valorTotal);
+
+                    _webServiceGetProviderServicesOnMAP(serviciosEscogidos);*/
+
+                }
+                return true;
+
+
 
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        android.text.format.DateFormat df = new android.text.format.DateFormat();
+        //fechaSolicitud = "" + df.format("yyyy-MM-dd hh:mm:ss", new java.util.Date());
+        fechaSolicitud = "" + df.format("yyyy-MM-dd", new java.util.Date());
+        _webServiceValidarExistenciaBono(sharedPreferences.getString("serialUsuario"), fechaSolicitud);
 
+    }
 
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        ServiciosAdapter.valorTotal=0;
+        ServiciosAdapter.valorTotalSinBono=0;
+        Log.i("Solicitar", "onDestroy");
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        //ServiciosAdapter.valorTotal=0;
+    }
 
     public boolean isFoundService() {
         return foundService;
@@ -595,11 +794,9 @@ public class SolicitarServicio extends Fragment
 
         };
 
-        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(10000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         ControllerSingleton.getInstance().addToReqQueue(jsonObjReq, "");
-
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(20000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     }
-
 
     private void _webServiceGetServices()
     {
@@ -852,8 +1049,488 @@ public class SolicitarServicio extends Fragment
                     }
                 };
 
-        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(10000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         ControllerSingleton.getInstance().addToReqQueue(jsonObjReq, "");
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(20000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+
+    }
+
+    private void _webServiceValidarExistenciaBono( final String codigoCliente, final String fechaSolicitud)
+    {
+        _urlWebService = vars.ipServer.concat("/ws/ValidarExistenciaBono");
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, _urlWebService, null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response)
+                    {
+                        try
+                        {
+                            Log.i("PRUEBA", "" + response);
+
+                            Boolean status = response.getBoolean("status");
+
+                            if(status)
+                            {
+                                JSONObject data = response.getJSONObject("result");
+
+                                /*sharedPreferences.putBoolean("existeBono",true);
+                                sharedPreferences.putBoolean("mostrarMenuBono",true);*/
+                                showMenuBono = true;
+                                menuAceptarBono.setVisible(showMenuBono);
+                                codigoBono = data.getString("codigoBono");
+                                //sharedPreferences.putString("codigoBono", codigoBono);
+                                valorBono = Integer.parseInt(data.getString("valorBono"));
+                                //sharedPreferences.putInt("valorBono", valorBono);
+                                Log.i("VALOR_BONO", "" + valorBono);
+                                Log.i("codigoBono", "" + codigoBono);
+                            }
+
+                            else
+                            {
+                                showMenuBono = false;
+                                menuAceptarBono.setVisible(showMenuBono);
+                                valorBono = 0;
+                                //sharedPreferences.putInt("valorBono",0);
+                                //sharedPreferences.putBoolean("existeBono", false);
+                                Log.i("VALOR_BONO", "" + valorBono);
+                                Log.i("VALOR_BONO", "" + sharedPreferences.getString("serialUsuario")+fechaSolicitud);
+
+
+                            }
+
+                        }
+                        catch (JSONException e)
+                        {
+
+                            // progressBar.setVisibility(View.GONE);
+                            //buttonSeleccionarServicios.setVisibility(View.GONE);
+
+
+
+                            Log.i("PRUEBA", "" + e.getMessage());
+
+
+
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder
+                                    .setMessage(e.getMessage().toString())
+                                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            //Intent intent = new Intent(Pago.this.getApplicationContext(), Registro.class);
+                                            //startActivity(intent);
+                                            //finish();
+                                        }
+                                    }).show();
+
+
+
+
+                            e.printStackTrace();
+                        }
+
+
+                    }
+
+                },
+
+
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+
+                        if (error instanceof TimeoutError)
+                        {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder
+                                    .setMessage("Error de conexión, sin respuesta del servidor.")
+                                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener()
+                                    {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int id)
+                                        {
+                                            //Intent intent = new Intent(Pago.this.getApplicationContext(), Registro.class);
+                                            //startActivity(intent);
+                                            //finish();
+                                        }
+                                    }).show();
+                        }
+
+                        else
+
+                        if (error instanceof NoConnectionError)
+                        {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder
+                                    .setMessage("Por favor, conectese a la red.")
+                                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener()
+                                    {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int id)
+                                        {
+                                            //Intent intent = new Intent(Pago.this.getApplicationContext(), Registro.class);
+                                            //startActivity(intent);
+                                            //finish();
+                                        }
+                                    }).show();
+                        }
+
+                        else
+
+                        if (error instanceof AuthFailureError)
+                        {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder
+                                    .setMessage("Error de autentificación en la red, favor contacte a su proveedor de servicios.")
+                                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener()
+                                    {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int id)
+                                        {
+                                            //Intent intent = new Intent(Pago.this.getApplicationContext(), Registro.class);
+                                            //startActivity(intent);
+                                            //finish();
+                                        }
+                                    }).show();
+                        }
+
+                        else
+
+                        if (error instanceof ServerError)
+                        {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder
+                                    .setMessage("Error server, sin respuesta del servidor.")
+                                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener()
+                                    {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int id)
+                                        {
+                                            //Intent intent = new Intent(Pago.this.getApplicationContext(), Registro.class);
+                                            //startActivity(intent);
+                                            //finish();
+                                        }
+                                    }).show();
+                        }
+
+                        else
+
+                        if (error instanceof NetworkError)
+                        {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder
+                                    .setMessage("Error de red, contacte a su proveedor de servicios.")
+                                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener()
+                                    {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int id)
+                                        {
+                                            //Intent intent = new Intent(Pago.this.getApplicationContext(), Registro.class);
+                                            //startActivity(intent);
+                                            //finish();
+                                        }
+                                    }).show();
+                        }
+
+                        else
+
+                        if (error instanceof ParseError)
+                        {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder
+                                    .setMessage("Error de conversión Parser, contacte a su proveedor de servicios.")
+                                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener()
+                                    {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int id)
+                                        {
+                                            //Intent intent = new Intent(Pago.this.getApplicationContext(), Registro.class);
+                                            //startActivity(intent);
+                                            //finish();
+                                        }
+                                    }).show();
+                        }
+
+                        //progressBar.setVisibility(View.GONE);
+                        //buttonSeleccionarServicios.setVisibility(View.GONE);
+                    }
+
+
+                })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError
+            {
+                HashMap<String, String> headers = new HashMap <String, String>();
+                headers.put("Content-Type", "application/json; charset=utf-8");
+                headers.put("WWW-Authenticate", "xBasic realm=".concat(""));
+                headers.put("serialUsuario", codigoCliente);
+                headers.put("fechaSolicitud", fechaSolicitud);
+                headers.put("MyToken", sharedPreferences.getString("MyToken"));
+                return headers;
+            }
+        };
+
+        ControllerSingleton.getInstance().addToReqQueue(jsonObjReq, "");
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(20000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+
+    }
+
+   private void _webServiceRedimirBono( final String codigoCliente, final String codigoBono)
+    {
+        _urlWebService = vars.ipServer.concat("/ws/RedimirBono");
+
+        Log.i("PRUEBA",""+codigoCliente);
+        Log.i("PRUEBA",""+codigoBono);
+        //Log.i("PRUEBA", "" + codigoSolicitud);
+        Log.i("PRUEBA", "" + valorBono);
+
+        final NumberFormat nf = NumberFormat.getNumberInstance(Locale.GERMAN);
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, _urlWebService, null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response)
+                    {
+                        try
+                        {
+                            Boolean status = response.getBoolean("status");
+
+                            if(status)
+                            {
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                builder.setTitle("BONO REDIMIDO")
+                                        .setMessage("Bono redimido éxitosamente.")
+                                        .setPositiveButton("Aceptar", new DialogInterface.OnClickListener()
+                                        {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int id)
+                                            {
+                                                /*linearCostoTotalDescuentoBono.setVisibility(View.VISIBLE);
+                                                valorTotalServicioConDescuentoBono.setText("$" +
+                                                        nf.format(sharedPreferences.getInt("valorBono")
+                                                        ));*/
+                                                //setIndicaBono("0");
+                                                //Log.i("indicabonoBONOREDIMIDO", "" + getIndicaBono());
+
+
+                                            }
+                                        }).setCancelable(false).show();
+
+                            }
+
+                            else
+                            {
+                                AlertDialog.Builder builder3 = new AlertDialog.Builder(getActivity());
+                                builder3.setTitle("REDIMIR BONO")
+                                        .setMessage("Error redimiendo el bono, en la opción Soporte exponga este caso")
+                                        .setPositiveButton("Aceptar", new DialogInterface.OnClickListener()
+                                        {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int id)
+                                            {
+                                               // setIndicaBono("0");
+                                                //Log.i("indicabonoERRORREDIMIENDOBONO", "" + getIndicaBono());
+
+                                            }
+                                        }).setCancelable(false).show();
+                            }
+
+
+
+                        }
+                        catch (JSONException e)
+                        {
+
+                            // progressBar.setVisibility(View.GONE);
+                            //buttonSeleccionarServicios.setVisibility(View.GONE);
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder
+                                    .setMessage(e.getMessage().toString())
+                                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            //Intent intent = new Intent(Pago.this.getApplicationContext(), Registro.class);
+                                            //startActivity(intent);
+                                            //finish();
+                                        }
+                                    }).show();
+
+                            Log.i("PRUEBA", "" + e.getMessage());
+
+
+                            e.printStackTrace();
+                        }
+
+
+                    }
+
+                },
+
+
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+
+                        if (error instanceof TimeoutError)
+                        {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder
+                                    .setMessage("Error de conexión, sin respuesta del servidor.")
+                                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener()
+                                    {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int id)
+                                        {
+                                            //Intent intent = new Intent(Pago.this.getApplicationContext(), Registro.class);
+                                            //startActivity(intent);
+                                            //finish();
+                                        }
+                                    }).show();
+                        }
+
+                        else
+
+                        if (error instanceof NoConnectionError)
+                        {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder
+                                    .setMessage("Por favor, conectese a la red.")
+                                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener()
+                                    {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int id)
+                                        {
+                                            //Intent intent = new Intent(Pago.this.getApplicationContext(), Registro.class);
+                                            //startActivity(intent);
+                                            //finish();
+                                        }
+                                    }).show();
+                        }
+
+                        else
+
+                        if (error instanceof AuthFailureError)
+                        {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder
+                                    .setMessage("Error de autentificación en la red, favor contacte a su proveedor de servicios.")
+                                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener()
+                                    {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int id)
+                                        {
+                                            //Intent intent = new Intent(Pago.this.getApplicationContext(), Registro.class);
+                                            //startActivity(intent);
+                                            //finish();
+                                        }
+                                    }).show();
+                        }
+
+                        else
+
+                        if (error instanceof ServerError)
+                        {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder
+                                    .setMessage("Error server, sin respuesta del servidor.")
+                                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener()
+                                    {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int id)
+                                        {
+                                            //Intent intent = new Intent(Pago.this.getApplicationContext(), Registro.class);
+                                            //startActivity(intent);
+                                            //finish();
+                                        }
+                                    }).show();
+                        }
+
+                        else
+
+                        if (error instanceof NetworkError)
+                        {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder
+                                    .setMessage("Error de red, contacte a su proveedor de servicios.")
+                                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener()
+                                    {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int id)
+                                        {
+                                            //Intent intent = new Intent(Pago.this.getApplicationContext(), Registro.class);
+                                            //startActivity(intent);
+                                            //finish();
+                                        }
+                                    }).show();
+                        }
+
+                        else
+
+                        if (error instanceof ParseError)
+                        {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder
+                                    .setMessage("Error de conversión Parser, contacte a su proveedor de servicios.")
+                                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener()
+                                    {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int id)
+                                        {
+                                            //Intent intent = new Intent(Pago.this.getApplicationContext(), Registro.class);
+                                            //startActivity(intent);
+                                            //finish();
+                                        }
+                                    }).show();
+                        }
+
+                        //progressBar.setVisibility(View.GONE);
+                        //buttonSeleccionarServicios.setVisibility(View.GONE);
+                    }
+
+
+                })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError
+            {
+                HashMap<String, String> headers = new HashMap <String, String>();
+                headers.put("Content-Type", "application/json; charset=utf-8");
+                headers.put("WWW-Authenticate", "xBasic realm=".concat(""));
+                headers.put("serialUsuario", codigoCliente);
+                headers.put("codigoBono", codigoBono);
+                //headers.put("codigoSolicitud", codigoSolicitud);
+                headers.put("MyToken", sharedPreferences.getString("MyToken"));
+                return headers;
+            }
+        };
+
+        ControllerSingleton.getInstance().addToReqQueue(jsonObjReq, "");
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(20000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
 
     }
 
