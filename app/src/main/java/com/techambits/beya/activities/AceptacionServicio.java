@@ -128,7 +128,6 @@ public class AceptacionServicio extends AppCompatActivity implements LocationLis
     public static TextView valorTotalServiciosSeleccionadosEsteticistaAceptacionServicios;
     public static TextView valorTotalServiciosSeleccionados;
 
-    private String distancia;
     private String tiempo;
 
     ServiceObtenerUbicacionEsteticista serviceObtenerUbicacionEsteticista;
